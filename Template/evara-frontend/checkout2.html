@@ -1,0 +1,406 @@
+﻿    {% extends 'evara-frontend/base.html' %}
+    {% load static %}
+
+    {% block title %}                                       
+    Checkout Page
+    {% endblock title %}  
+
+    {% block content %}
+  
+
+    <!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+    
+    <!-- alertify -->
+   <!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+    
+
+        <main class="main">
+            <section class="mt-50 mb-50">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 mb-sm-15">
+                            <div class="toggle_info">
+                                <span>
+                                    <i class="fi-rs-user mr-10"></i>
+                                    <span class="text-muted">Do you want to add a new Address?</span>
+                                    <a href="#AddNewAddress" data-bs-toggle="collapse" class="collapsed" aria-expanded="false">
+                                        Click here to Add
+                                    </a>
+                                </span>
+                            </div>
+                            <div class="panel-collapse collapse login_form" id="AddNewAddress">
+                                <div class="panel-body">
+                                    <div class="login_wrap widget-taber-content bg-white background-white border-radius-5 p-4 mb-5 row">
+                                        <form method="post" action="{% url "cart:add_address" %}" >
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                <label for="address">Address (Area and Street)</label>
+                                                <textarea class="form-control" id="address" name="address"
+                                                        placeholder="Enter your address"></textarea>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-lg-6">
+                                                    <label for="locality">Name</label>
+                                                    <input type="text" class="form-control" id="locality" name="first_name"
+                                                        placeholder="Enter your name">
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label for="locality">Name</label>
+                                                    <input type="text" class="form-control" id="locality" name="last_name"
+                                                        placeholder="Enter your last_name">
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label for="locality">Country</label>
+                                                    <input type="text" class="form-control" id="locality" name="country"
+                                                        placeholder="Enter your Country">
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label for="state">State</label>
+                                                    <input type="text" class="form-control" id="state" name="state"
+                                                        placeholder="Enter a state">
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label for="city">City/District/Town</label>
+                                                    <input type="text" class="form-control" id="city" name="city"
+                                                        placeholder="Enter your city">
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label for="pinCode">Pin code</label>
+                                                    <input type="text" class="form-control" name="pincode" id="pincode"
+                                                        placeholder="Enter your pinCode">
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label for="mobile">10-digit mobile number</label>
+                                                    <input type="tel" class="form-control" name="phone" id="mobile"
+                                                        placeholder="Enter your mobile number">
+                                                </div>
+                                                <label for="userId"></label>
+                                                <input type="number" name="userId" id="userId" value="{{ user.id }}" hidden>
+                                            </div>
+                                            <div class="d-flex justify-content-center ">
+                                                <div class="form-group">
+                                                    <label for="submit"></label>
+                                                    <button type="submit" id="submit" class="btn btn-success-light">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="toggle_info">
+                                <span><i class="fi-rs-label mr-10"></i><span class="text-muted">Have a coupon?</span> <a href="#coupon" data-bs-toggle="collapse" class="collapsed" aria-expanded="false">Click here to enter your code</a></span>
+                            </div>
+                            <div class="panel-collapse collapse coupon_form " id="coupon">
+                                <div class="panel-body">
+                                    <p class="mb-30 font-sm">If you have a coupon code, please apply it below.</p>
+                                    {% comment %} <form method="post" action="{% url "orders:apply_coupon" %}"> {% endcomment %}
+                                        <div class="form-group">
+                                            <label for="coupon-field"></label>
+                                            <input type="text" id="coupon-field" placeholder="Enter Coupon Code..." name="coupon_field">
+                                        </div>
+                                        <div class="form-group">
+                                            <button id="coupon-btn" class="btn btn-md" type="submit" name="login">Apply Coupon</button>
+                                        </div>
+                                    {% comment %} </form> {% endcomment %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+            <form method="post" action="{% url 'orders:order_placed' %}" onsubmit="return false">
+                {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="divider mt-50 mb-50"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">  
+                        <div class="col-md-6">
+
+                            <div class="order_review">
+                                <div class="mb-20">
+                                    <h4>Select Your address</h4>
+                                </div>
+                                <!-- LOOP -->
+                                {% for address in address_list %}
+                                
+                                    <div class="border border-dark rounded pt-15 pb-20 mb-15 table-responsive order_table text-center row" >
+                                        <div class="col-lg-11">
+                                            <div>
+                                                <div class="d-flex flex-column">
+
+                                                <span class="mr-5 bold font-lg">{{ address.first_name }} {{ address.last_name }}</span>
+                                                <span class="ml-5 mr-5"></span>
+                                                <span class="ml-5">{{ address.phone }}</span>
+                                            </div>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <p>{{ address.address_line_1 }}</p>
+                                                <div>
+                                                    <span>{{ address.city }}</span>
+                                                    <span class="mr-5"></span>
+                                                    <span>{{ address.state }}</span>
+                                                    <span class="mr-5"></span>
+                                                    <span>{{ address.country }}</span>
+                                                </div>
+                                                <span class="mr-5"></span>
+                                                <span>'Pin code: {{ address.pincode }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <label for="addressId"></label>
+                                            <input type="radio" class="" id="addressId" name="address" value="{address.id}" checked="">
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    <!-- LOOP ENDS-->
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="order_review">
+                                    <div class="mb-20">
+                                        <h4>Your Orders</h4>
+                                </div>
+                                <div class="table-responsive order_table text-center">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2">Product</th>
+                                                <th>Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!--PRODUCT LOOP-->
+                                            {% for cart_item in cart_items %}
+                                            <tr>
+                                                <td class="image product-thumbnail">
+                                                    <img src="{{cart_item.product.images.url }}" alt="#">
+                                                </td>
+                                                <td>
+                                                    <h5><a href="#">
+                                                        <span>{{ cart_item.product.product_name|truncatechars:40 }}</span>
+                                                    </a></h5>
+                                                    <span class="product-qty">x {{ cart_item.quantity }}</span>
+                                                        <div>
+                                                            <span class="font-sm ">Variation :{{ cart_item.variations.variation_value }}</span>
+                                                            <input type="hidden" id="category_discount" name="category_discount" value="{{cart_item.product.category.discount}}  ">
+                                                        </div>
+                                                        <div>
+                                                    {% if  cart_item.product.category.discount != 0 %}
+                                                    <span class=" " style="color: red;">Category Offer:  {{cart_item.product.category.discount}} % Applied </span>
+                                                   
+
+                                                        </div>
+                                                    {% else %}
+                                                    {% endif %}
+                                                </td>
+                                                <td><span> &#8377  {{ cart_item.product.price |floatformat:1}}</span></td>
+                                            </tr>
+                                            {% endfor %}
+                                            <!--PRODUCT LOOP ENDS HERE-->
+
+                                            <tr>
+                                                <th>SubTotal</th>
+                                                <td class="product-subtotal" colspan="2">
+                                                    <span></span>
+                                                    <span class="total-amount-no-discount"> &#8377  {{ total|floatformat:1 }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Shipping</th>
+                                                <td colspan="2"><em>Free Shipping</em></td>
+                                            </tr>
+                                         
+                                            <tr>
+                                                <th>Total</th>
+                                                <td colspan="2" class="product-subtotal">
+                                                    <span class="font-xl text-brand fw-900"></span>
+                                                    <span  class="total-amount-no-discount font-xl text-brand fw-900">&#8377; {{ total|floatformat:1 }}</span>
+                                                </td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="bt-1 border-color-1 mt-30 mb-30"></div>
+                                <div class="payment_method">
+                                    <div class="mb-25">
+                                        <h5>Payment</h5>
+                                    </div>
+                                    <div class="payment_option">
+                                        <div class="custome-radio">
+                                            <input class="form-check-input"  type="radio" value="CashOnDelivery" name="payment_option" id="exampleRadios3" checked="">
+                                            <label class="form-check-label" for="exampleRadios3" aria-controls="bankTranfer">
+                                                Cash On Delivery
+                                            </label>
+                                            <div>
+                                            <input class="form-check-input"  type="radio" value="RAZORPAY" name="payment_option" id="exampleRadios4" >
+                                            <label class="form-check-label" for="exampleRadios4" aria-controls="bankTranfer">
+                                                Online Payment
+                                            </label>
+                                            </div>
+                                            <div>
+                                            <input class="form-check-input"  type="radio" value="Wallet" name="payment_option" id="exampleRadios5" >
+                                            <label class="form-check-label" for="exampleRadios5" aria-controls="bankTranfer">
+                                               Wallet
+                                            </label>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                             <button onclick="checkForCredentials(this.form)" type="submit" class="btn btn-brand btn-block mt-30">Place Order</button>
+                            
+                            </div>
+                        
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </section>    
+
+            <input type="hidden" id="total-amount" value="{{ total|floatformat:1 }}">
+            <input type="hidden" id="csrf_token" value="{% csrf_token %}">
+            
+        </main>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+
+            let couponCode
+            let total_final =  document.getElementById('total-amount').value;
+            let category_discount =  document.getElementById('category_discount').value;
+            function checkForCredentials(form) {
+               
+                if(couponCode){
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'coupon',
+                        value: couponCode
+                    }).appendTo(form);
+                    
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'total_final',
+                        value: total_final
+                    }).appendTo(form);
+                }
+                $('<input>').attr({
+                        type: 'hidden',
+                        name: 'category_discount',
+                        value: category_discount
+                    }).appendTo(form);
+                    
+                form.submit();
+            }
+ 
+            $('#coupon-btn').on('click', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                couponCode = document.getElementById('coupon-field').value;
+                const totalAmount = document.getElementById('total-amount').value;
+            
+                $.ajax({
+                    type: 'POST',
+                    url: '/order/apply_coupon/',
+                    dataType: 'json',
+                    data: { total: totalAmount, couponCode: couponCode },
+                    beforeSend: function(xhr, settings) {
+                        function getCookie(name) {
+                            var cookieValue = null;
+                            if (document.cookie && document.cookie != '') {
+                                var cookies = document.cookie.split(';');
+                                for (var i = 0; i < cookies.length; i++) {
+                                    var cookie = jQuery.trim(cookies[i]);
+                                    // Does this cookie string begin with the name we want?
+                                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                        break;
+                                    }
+                                }
+                            }
+                            return cookieValue;
+                        }
+                        if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                            // Only send the token to relative URLs i.e. locally.
+                            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                        }
+                    } ,
+                    success: function (response) {
+                        if (response.success) {
+                            console.log(response.success)
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: response.message,
+                                timer: 2000,
+                                showConfirmButton: false,
+                            });
+
+                            total_final = Math.ceil(totalAmount - ((response.coupon / 100) * totalAmount))
+                            $('.total-amount-no-discount')
+                                .css("text-decoration", "line-through")
+                                .prev()
+                                .text('\u20B9' + total_final);
+
+                        } else {
+                            console.log(response.error)
+
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: response.error,
+                            });
+                        }
+                    
+                       
+                    },
+                    
+                    error: function (error) {
+                        console.log(error)
+                    }
+                });
+            });
+    </script>
+
+    <!-- alertify -->
+
+    <!-- JavaScript -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+
+    <script>
+        alertify.set('notifier', 'position', 'top-center');
+    
+        {% for msg in messages %}
+            {% if 'error' in msg.tags %}
+                alertify.error('{{ msg }}');
+            {% elif 'warning' in msg.tags %}
+                alertify.warning('{{ msg }}');
+            {% else %}
+                alertify.success('{{ msg }}');
+            {% endif %}
+        {% endfor %}
+    </script>
+    
+ 
+    {% endblock content %}
+

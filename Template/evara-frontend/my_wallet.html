@@ -1,0 +1,67 @@
+{% extends 'evara-frontend/base.html' %}
+
+{% block content %}
+
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+  <strong></strong>{{ message }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+    <section class="section-padding footer-mid container">
+        <div>
+            <h2 class="my-4">My Wallet</h2>
+        </div>
+
+        <div class="btn btn-success-light p-4 d-flex justify-content-start" style="color: rgb(151, 255, 220);  width: 100%">
+            <div>
+                <span class="h1">&#8377 {{ total_wallet_balance }}</span><br>
+                {% comment %} <span class="h1">&#8377 {{ wallet.balance }}</span><br> {% endcomment %}
+                <span class="h6">Current Wallet Balance</span>
+            </div>
+        </div>
+
+        <div>
+            <h4 class="my-4">Transaction History</h4>
+        </div>
+
+        <div>
+            <table class="table">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Transaction ID</th>
+                    <th scope="col">Date and Time </th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Transaction Type</th>
+                </tr>
+                </thead>
+                {% for wallet_transaction in wallet_transactions %}
+                {% if  wallet_transaction.get_transaction_type_display == "Credit"  %}
+                <tbody>
+                    <tr class="table-success">
+                        <th scope="row">{{ wallet_transaction.id }}</th>
+                        <td>{{ wallet_transaction.created_at }}</td>
+                        <td>{{ wallet_transaction.transaction_detail }}</td>
+                        <td>{{ wallet_transaction.amount }}</td>
+                        <td>{{ wallet_transaction.get_transaction_type_display }}</td>
+                    </tr>
+                </tbody>
+                {% else %}
+                <tbody>
+                    <tr class="table-danger  ">
+                        <th scope="row">{{ wallet_transaction.id }}</th>
+                        <td>{{ wallet_transaction.created_at }}</td>
+                        <td>{{ wallet_transaction.transaction_detail }}</td>
+                        <td>{{ wallet_transaction.amount }}</td>
+                        <td>{{ wallet_transaction.get_transaction_type_display }}</td>
+                    </tr>
+                </tbody>
+                {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+    </section>
+    
+{% endblock %}

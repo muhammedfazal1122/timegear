@@ -1,0 +1,86 @@
+{% extends 'evara-backend/base.html' %}
+{% load static %}
+{% block content %}
+
+{% for message in messages %}
+<div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+  <strong></strong>{{message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+
+        <section class="content-main">
+            <div class="content-header">
+                <h2 class="content-title">Users list</h2>
+                
+            </div>
+            {% comment %} <div class="content-header">
+                <h4 class="content-title"> </h4>
+                <div>
+                    <a href="{% url "accounts:admin_dashboard" %}" class="btn btn-primary"><i class="material-icons md-plus"></i>Dashboard</a>
+                </div>
+                </div> {% endcomment %}
+
+            <div class="card mb-4">
+                <header class="card-header">
+                   
+                </header> <!-- card-header end// -->
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>mobile</th>
+                                    <th>Status</th>
+                                    <th>Registered</th>
+                                    <th class="text-end"> Action </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                <tr>
+                                    <td width="40%">
+                                        <a href="#" class="itemside">
+                                            <div class="left">
+                                                {% comment %} <img src="{% static 'assets-back/imgs/people/avatar1.jpg' %}" class="img-sm img-avatar" alt="Userpic"> {% endcomment %}
+                                            </div>
+                                            <div class="info pl-3">
+                                                <h6 class="mb-0 title">{{user.username}}</h6>
+                                                <small class="text-muted">Seller ID:#{{user.id}}</small>
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <td>{{user.email}}</td>
+                                    <td>{{user.phone}}</td>
+
+                                    {% if user.is_active %}
+                                    <td><span class="badge rounded-pill alert-success">Active</span></td>
+                                    {% else %}
+                                    <td><span class="badge rounded-pill alert-danger">Inactive</span></td>
+                                    {% endif %}
+                                    <td>{{user.date_joined}}</td> 
+
+                                    {% if user.is_blocked %}
+                                    <td class="text-end">
+                                        {% comment %} {% url 'myapp:admn_users_block_unblock' id=user.id %} {% endcomment %}
+                                        <a href="{% url 'app:admn_users_block_unblock' id=user.id %}" class="btn btn-sm btn-brand rounded font-sm mt-15">Unblock</a>
+                                    </td>
+                                    {% else %}
+                                    <td class="text-end">
+                                        <a href="{% url 'app:admn_users_block_unblock' id=user.id %}"class="btn btn-sm btn-brand rounded font-sm mt-15">Block</a>
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}                       
+                            </tbody>
+                        </table> <!-- table-responsive.// -->
+                    </div>
+                </div> <!-- card-body end// -->
+            </div> <!-- card end// -->
+            
+        </section> <!-- content-main end// -->
+        {% endblock content %}
+

@@ -1,0 +1,98 @@
+{% extends 'evara-frontend/base.html' %}
+{% load static %}
+{% block title %}
+TimeMachine
+{% endblock title %}
+
+
+
+{% block content %}
+<style>
+  .red-text {
+      color: red;
+  }
+</style>
+<main class="main">
+
+  
+  <section class="pt-1 pb-2">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 m-auto">
+          <div class="row">
+            {% for message in messages %}
+            <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+              <strong></strong>{{message}}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+             {% endfor %}
+        <div class="container d-flex justify-content-center align-items-center vh-100 mt-3">
+            <div class="col-lg-7">
+                <div class="login_wrap widget-taber-content p-30 background-white border-radius-10 mb-md-5 mb-lg-0 mb-sm-5">
+                  {% comment %} <div class="padding_eight_all bg-white">
+                    <div class="heading_s1">
+                      <h3 class="mb-30">OTP</h3>
+                    </div> {% endcomment %}
+                    <div class="container">
+                      <div class="row justify-content">
+                          <div class="col-md-12">
+                              <h2 class="mt-5 mb-4">OTP Verification</h2>
+                              <form method="post" class="mb-5">
+                                  {% csrf_token %}
+                                  Enter the OTP sent to your email:
+                                  <div class="form-group">
+                                      <label for="otp">OTP:</label>
+                                      <input type="text" name="otp" class="form-control" required>
+                                      <p id="timer">Time remaining: <span id="countdown">60</span> seconds</p>
+                                  </div>
+                                  <button type="submit" class="btn btn-primary">Verify OTP</button>
+                              </form>
+                              
+                              <a id="resend-link" style="display: none;" href="{% url 'accounts:resend-otp' %}">Resend OTP</a>
+                          </div>
+                      </div>
+                  </div>
+              
+                  
+                  
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    function startTimer(duration, display) {
+        var timer = duration, seconds;
+
+        var countdown = setInterval(function () {
+            seconds = parseInt(timer % 60, 10);
+
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            var timeText = "00:" + seconds;
+            display.textContent = timeText;
+
+            if (timer < 10) {
+                display.classList.add("red-text");
+            }
+
+            if (--timer < 0) {
+                clearInterval(countdown);
+                // Handle timer expiration here (e.g., show Resend OTP link)
+                document.getElementById("resend-link").style.display = "block";
+            }
+        }, 1000);
+    }
+
+    window.onload = function () {
+        var thirtySeconds = 30;
+        var display = document.querySelector('#timer');
+        startTimer(thirtySeconds, display);
+    };
+</script> 
+{% endblock content %}

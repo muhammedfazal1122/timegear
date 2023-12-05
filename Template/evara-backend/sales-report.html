@@ -1,0 +1,166 @@
+
+{% extends 'evara-backend/base.html' %}
+{% load static %}
+{% block content %}
+{% for message in messages %}
+<div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+  <strong></strong>{{message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+<style>
+    .hidden-row {
+        display: none;
+    }
+
+    label {
+        display: block;
+        font:
+          1rem 'Fira Sans',
+          sans-serif;
+      }
+      
+      input,
+      label {
+        margin: 0.4rem 0;
+      }
+      
+</style>
+
+
+<div class="card mb-4">
+
+    {% load static %}
+
+<header class="card-header">
+    <div class="row gx-3 d-flex justify-content-between" >
+        <div class="col-lg-3 col-6 col-md-3">
+                <form action="{% url 'user:admn_sales_report' %}" method="get" class="d-flex flex-row">
+                    <input type="number" name="status_filter" value="{{status_filter}}" hidden="hidden">
+                <div class="d-flex flex-row justify-content-between">
+                    <div class="d-flex flex-column">
+
+                    <label for="start">Start date:</label>
+
+                    <input type="date" id="start" name="start_date" value="{% if start_date %}{{ start_date }}{% else %}2023-11-20{% endif %}" />
+                </div>
+                    <div class="d-flex flex-column">
+
+                    <label for="end">End date:</label>
+                    <input type="date" id="end" name="end_date" value="{% if end_date %}{{ end_date }}{% else %}{{ current_date }}{% endif %}" />
+                </div>
+                    <div class="d-flex flex-column justify-content-end align-items-center  " >
+
+                    <button type="submit" class="form-control "style="height:34px; ">
+                        <!-- Add your material icon here -->
+                        <i class="material-icons md-sort"></i>
+                    </button>
+                    </div>
+                </div>
+                </form>
+        </div>
+    
+        <div class="col-lg-3 col-6 col-md-3"></div>
+    
+        <div class="col-lg-3 col-6 col-md-3">
+            <form method="get" class="d-flex flex-row">
+                <input type="date" id="start" name="start_date" value="{% if start_date %}{{ start_date }}{% else %}2023-11-20{% endif %}" hidden="hidden" />
+                <input type="date" id="end" name="end_date" value="{% if end_date %}{{ end_date }}{% else %}{{ current_date }}{% endif %}" hidden="hidden"/>
+
+                <select class="form-select border border-dark" name="status_filter">
+                    <option value="0" {% if status_filter == 0 %}selected{% endif %}>All Status</option>
+                    <option value="1" {% if status_filter == 1 %}selected{% endif %}>Pending</option>
+                    <option value="2" {% if status_filter == 2 %}selected{% endif %}>Shipped</option>
+                    <option value="3" {% if status_filter == 3 %}selected{% endif %}>Delivered</option>
+                    <option value="4" {% if status_filter == 4 %}selected{% endif %}>Cancel</option>
+                    <option value="5" {% if status_filter == 5 %}selected{% endif %}>Returned</option>
+                </select>
+                <button type="submit" class="border border-dark border-left-0 px-3">
+                    <i class="material-icons md-published_with_changes"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+    
+</header>
+
+    
+    <div class="card-body">
+        <div class="table-responsive">
+            <div class="table-responsive">
+                
+                <table class="table align-middle table-nowrap mb-0">
+                    
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="text-center">
+                                <div class="form-check align-middle">
+                                    <input class="form-check-input" type="checkbox" id="transactionCheck01">
+                                    <label class="form-check-label" for="transactionCheck01"></label>
+                                </div>
+                            </th>
+                            <th class="align-middle" scope="col">Order ID</th>
+                            <th class="align-middle" scope="col">Billing Name</th>
+                            <th class="align-middle" scope="col">Date</th>
+                            <th class="align-middle" scope="col">Payment Status</th>
+                            <th class="align-middle" scope="col">Payment Method</th>
+                            {% comment %} <th class="align-middle" scope="col">View Details</th> {% endcomment %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+
+                        <tr>
+                            <td class="text-center">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="transactionCheck02">
+                                    <label class="form-check-label" for="transactionCheck02"></label>
+                                </div>
+                            </td>
+                            <td><a href="#" class="fw-bold">{{order.order_number}}</a> </td>
+                            <td>{{order.first_name}}</td>
+                            <td>
+                                {{order.created_at}}
+                            </td>
+                           
+                            <td>
+                                <span class="badge badge-pill badge-soft-success">{{ order.status }}
+                                    {% comment %} <span class="badge badge-pill  alert-dark border border-dark">
+                                        <a href="#" data-id="{{ order.id }}" onclick="showModal(this.getAttribute('data-id'))">
+                                            <i class="material-icons md-edit"></i>
+                                        </a>
+                                    </span> {% endcomment %}
+                                </span>
+                            </td>
+                            
+                            <td>
+                                <i class="material-icons md-payment font-xxl text-muted mr-5"></i> {{order.payment.payment_method}}
+                            </td>
+                            {% comment %} <td class="text-end">
+                                <a data-id="{{ order.id }}" onclick="toggleHiddenRow(this, '{{ order.id }}')"
+                                class="btn btn-md rounded font-sm toggle-detail">View Detail</a>
+                            </td> {% endcomment %}
+                            
+                        </tr>
+                        
+                        {% endfor %}
+
+
+                      
+                    </tbody>
+                </table>
+       
+            </div>
+        </div> <!-- table-responsive end// -->
+    </div>
+</div>
+
+
+
+
+
+
+
+
+{% endblock content %}
+

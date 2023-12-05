@@ -1,0 +1,117 @@
+{% extends 'evara-backend/base.html' %}
+{% load static %}
+{% block content %}
+{% for message in messages %}
+<div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+  <strong></strong>{{message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+        <section class="content-main">
+            <div class="row">
+                <div class="col-6">
+                    <div class="content-header">
+                        <h2 class="content-title">Edit Product</h2>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <label class="form-label" for="product_name">Product Name:</label>
+                                <input class="form-control" type="text"  name="product_name" required value={{product.product_name}}><br>
+                        
+                                <label class="form-label" for="category">Category:</label>
+                                <select class="form-control"  name="category" required>
+                                    {% for category in categories %}
+                                    <option value="{{ category.id }}" 
+                                    {% if category.id == product.category.id %}
+                                    selected
+                                    {% endif %}>
+                                    {{ category.category_name }}
+                                    </option>
+                                    {% endfor %}
+                                    
+                                    <!-- Add more options as needed -->
+                                </select><br>
+                                <label class="form-label" for="brand">Brand:</label>
+                                <select class="form-control" name="brand" required>
+                                    {% for br in brand %}
+                                    <option value="{{ br.id }}" 
+                                        {% if br.id == product.id %}
+                                            selected
+                                        {% endif %}>
+                                        {{ br.brand_name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                                
+                                    <!-- Add more options as needed -->
+                                </select><br>
+                                {% comment %} <label class="form-label" for="brand">:</label>
+                                <input class="form-control" type="text"  name="brand" value="{{product.brand}}"><br> {% endcomment %}
+                        
+                                <label class="form-label" for="description">Description:</label><br>
+                                <textarea class="form-control"  name="description" rows="4" cols="50">{{product.description}}</textarea><br>
+                        
+                                <label class="form-label" for="price">Price:</label>
+                                <input class="form-control" type="number"  name="price" value="{{product.price}}" required><br>
+                                
+                                <label class="form-label" for="price">Max Price:</label>
+                                <input class="form-control" type="number"  name="max_price" value="{{product.max_price}}" required><br>
+
+                                <label class="form-label" for="quantity">stock:</label>
+                                <input class="form-control" type="number"  name="stock" value="{{product.stock}}" required><br>
+                        
+                                <label class="form-label" for="product_images">Product Image1:</label>
+                                <input class="form-control" type="file" name="images" value=" {{product.images.url}}" accept="image/*"  required multiple><br>
+                                {% if product.images.url%}
+                                    <img src="{{product.images.url}}" alt="{{ product.images.name }}">
+                                {% endif %}
+
+
+                                <label class="form-label" for="product_images">Product Image2:</label>
+                                <input class="form-control" type="file" name="product_images2" accept="image/*" required>
+                                {% if product.product_images2 %}
+                                  <img src="{{ product.product_images2.url }}" alt="{{ product.product_images2.name }}">
+                                {% endif %}
+                                <br>
+                                
+                                <label class="form-label" for="product_images">Product Image3:</label>
+                                <input class="form-control" type="file" name="product_images3" accept="image/*" required>
+                                {% if product.product_images3 %}
+                                  <img src="{{ product.product_images3.url }}" alt="{{ product.product_images3.name }}">
+                                {% endif %}
+                                <br>
+                                
+                                <label class="form-label" for="product_images">Product Image4:</label>
+                                <input class="form-control" type="file" name="product_images4" accept="image/*" required>
+                                {% if product.product_images4 %}
+                                  <img src="{{ product.product_images4.url }}" alt="{{ product.product_images4.name }}">
+                                {% endif %}
+                                <br>
+                                
+                                <label class="form-label" for="product_images">Product Image5:</label>
+                                <input class="form-control" type="file" name="product_images5" accept="image/*" required>
+                                {% if product.product_images5 %}
+                                  <img src="{{ product.product_images5.url }}" alt="{{ product.product_images5.name }}">
+                                {% endif %}
+                                <br> 
+                                
+                                <div>
+                                    <button class="btn btn-light rounded font-sm mr-5 text-body hover-up">Save to draft</button>
+                                    <button type="submit" class="btn btn-md rounded font-sm hover-up">Update Product</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> <!-- content-main end// -->
+        {% endblock content %}
+        
+

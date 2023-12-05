@@ -1,0 +1,87 @@
+{% extends 'evara-frontend/base.html' %}
+{% load static %}
+
+{% block title %}
+Shop Page
+{% endblock title %}
+
+{% block content %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+  <strong></strong>{{ message }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+
+<main class="main">
+    <section class="mt-10 mb-10">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <!-- ADDRESS LIST -->
+                <div class="col-lg-6">
+                    <div class="border-1 border-dark pt-5 mt-15 mb-15">
+                        <h2>Add Address</h2>
+                    </div>
+                    <div class="p-2 mt-15 mb-15">
+                        <!-- LOOP -->
+                        <div class="login_wrap widget-taber-content bg-white background-white border-radius-5 p-4 mb-5 row">
+                            <form method="post" action="{% url "user:add_address" %}" >
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="address">Address (Area and Street)</label>
+                                    <textarea class="form-control" id="address" name="address" placeholder="Enter your address"></textarea>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-lg-6">
+                                        <label for="locality">Country</label>
+                                        <input type="text" class="form-control" id="locality" name="country" placeholder="Enter your Country">
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="state">State</label>
+                                        <input type="text" class "form-control" id="state" name="state" placeholder="Enter a state">
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="city">City/District/Town</label>
+                                        <input type="text" class="form-control" id="city" name="district" placeholder="Enter your city">
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="pincode">Pincode</label>
+                                        <input type="text" class="form-control" name="pincode" id="pincode" placeholder="Enter your pincode">
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="mobile">10-digit mobile number</label>
+                                        <input type="tel" class="form-control" name="phone" id="mobile" placeholder="Enter your mobile number">
+                                    </div>
+                                    <input type="number" name="userId" id="userId" value="{{ user.id }}" hidden>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <div class="form-group">
+                                        <label for="submit"></label>
+                                        <button type="submit" id="submit" class="btn btn-success-light">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- LOOP ENDS -->
+                    </div>
+                    <!-- ADDRESS LOOP ENDS -->
+                </div>
+                <!-- ADDRESS LIST ENDS -->
+                <div class="col-lg-3"></div>
+            </div>
+        </div>
+    </section>
+    <section class="mt-10 mb-10">
+    </section>
+</main>
+<script>
+    alertify.set('notifier', 'position', 'top-center');
+    {% for msg in messages %}
+    alertify.error('{{ msg }}');
+    {% endfor %}
+</script>
+{% endblock content %}
+</body>
+</html>

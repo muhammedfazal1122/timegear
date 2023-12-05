@@ -1,0 +1,85 @@
+{% extends 'evara-backend/base.html' %}
+{% load static %}
+{% block content %}
+{% for message in messages %}
+<div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+  <strong></strong>{{message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+        <section class="content-main">
+            <div class="row">
+                <div class="col-6">
+                    <div class="content-header">
+                        <h2 class="content-title">Add New Product</h2>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <form method="POST" action="{% url 'product:admn_add_product' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <label class="form-label" for="product_name">Product Name:</label>
+                                <input class="form-control" type="text"  name="product_name" required><br>
+                        
+                                <label class="form-label" for="category">Category:</label>
+                                <select class="form-control"  name="category" >
+                                    {% for category in categories %}
+                                    <option value="{{ category.id }}">{{category.category_name}} </option>
+                                    {% endfor %}
+                                    
+                                    <!-- Add more options as needed -->
+                                </select><br>
+
+                                <label class="form-label" for="brand">Brand:</label>
+                                <select class="form-control" name="brand">
+                                    {% for br in brand %}
+                                    <option value="{{ br.id }}">{{ br.brand_name }}</option>
+                                    {% endfor %}
+                                </select><br>     
+                              
+                                <label class="form-label" for="description">Description:</label><br>
+                                <textarea class="form-control"  name="description" rows="4" cols="50"></textarea><br>
+                        
+                                <label class="form-label" for="price">Price:</label>
+                                <input class="form-control" type="number"  name="price" required><br>
+
+                                <label class="form-label" for="price">Max-Price:</label>
+                                <input class="form-control" type="number"  name="max_price" required><br>
+
+                                <label class="form-label" for="quantity">Stock:</label>
+                                <input class="form-control" type="number"  name="stock" required><br>
+                        
+                        
+                                <label class="form-label" for="product_images">Product Image:</label>
+                                <input class="form-control" type="file" name="images" accept="image/*"><br>
+
+                                <label class="form-label" for="product_images">Product Image2:</label>
+                                <input class="form-control" type="file" name="product_images2" accept="image/*"><br>
+
+                                <label class="form-label" for="product_images">Product Image3:</label>
+                                <input class="form-control" type="file" name="product_images3" accept="image/*"><br>
+
+                                <label class="form-label" for="product_images">Product Image4:</label>
+                                <input class="form-control" type="file" name="product_images4" accept="image/*"><br>
+
+                                <label class="form-label" for="product_images">Product Image5:</label>
+                                <input class="form-control" type="file" name="product_images5" accept="image/*"><br>
+
+                        
+                                <div>
+                                    <button class="btn btn-light rounded font-sm mr-5 text-body hover-up">Save to draft</button>
+                                    <button type="submit" class="btn btn-md rounded font-sm hover-up">Publish</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> <!-- content-main end// -->
+        {% endblock content %}
+        

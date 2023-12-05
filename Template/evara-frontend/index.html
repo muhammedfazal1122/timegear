@@ -1,0 +1,780 @@
+﻿{% load static  %}
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:20:36 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>TimeMachine</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/imgs/theme/logo3.png' %}">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+
+    <!-- alertify -->
+   <!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+    
+</head>
+
+
+<style>
+    .dropdown-menu.dropdown-menu-end {
+        border: 2px solid #44f59d; /* Light gray border */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle box shadow */
+    }
+</style>
+<body>
+    <!-- Modal -->
+    
+
+    <!-- Quick view -->
+    <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">              
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>       
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="detail-gallery">
+                                <span class="zoom-icon"><i class="fi-rs-search"></i></span>
+                                <!-- MAIN SLIDES -->
+                                <div class="product-image-slider">
+                                    <figure class="border-radius-10">
+                                        <img src="{% static 'assets/imgs/shop/product-16-2.jpg' %}" alt="product image">
+                                    </figure>
+                                    <figure class="border-radius-10">
+                                        <img src="{% static 'assets/imgs/shop/product-16-1.jpg' %}" alt="product image">
+                                    </figure>
+                                    <figure class="border-radius-10">
+                                        <img src="{% static 'assets/imgs/shop/product-16-3.jpg' %}" alt="product image">
+                                    </figure>
+                                    <figure class="border-radius-10">
+                                        <img src="{% static 'assets/imgs/shop/product-16-4.jpg' %}" alt="product image">
+                                    </figure>
+                                    <figure class="border-radius-10">
+                                        <img src="{% static 'assets/imgs/shop/product-16-5.jpg' %}" alt="product image">
+                                    </figure>
+                                    <figure class="border-radius-10">
+                                        <img src="{% static '/imgs/shop/product-16-6.jpg' %}" alt="product image">
+                                    </figure>
+                                    <figure class="border-radius-10">
+                                        <img src="{% static '/imgs/shop/product-16-7.jpg' %}" alt="product image">
+                                    </figure>
+                                </div>
+                                <!-- THUMBNAILS -->
+                                <div class="slider-nav-thumbnails pl-15 pr-15">
+                                    <div><img src="{% static 'assets/imgs/shop/thumbnail-3.jpg' %}" alt="product image"></div>
+                                    <div><img src="{% static 'assets/imgs/shop/thumbnail-4.jpg' %}" alt="product image"></div>
+                                    <div><img src="{% static 'assets/imgs/shop/thumbnail-5.jpg' %}" alt="product image"></div>
+                                    <div><img src="{% static 'assets/imgs/shop/thumbnail-6.jpg' %}" alt="product image"></div>
+                                    <div><img src="{% static 'assets/imgs/shop/thumbnail-7.jpg' %}" alt="product image"></div>
+                                    <div><img src="{% static 'assets/imgs/shop/thumbnail-8.jpg' %}" alt="product image"></div>
+                                    <div><img src="{% static 'assets/imgs/shop/thumbnail-9.jpg' %}" alt="product image"></div>
+                                </div>
+                            </div>
+                            <!-- End Gallery -->
+                            <div class="social-icons single-share">
+                                <ul class="text-grey-5 d-inline-block">
+                                    <li><strong class="mr-10">Share this:</strong></li>
+                                    <li class="social-facebook"><a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-facebook.svg' %}" alt=""></a></li>
+                                    <li class="social-twitter"> <a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-twitter.svg' %}" alt=""></a></li>
+                                    <li class="social-instagram"><a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-instagram.svg' %}" alt=""></a></li>
+                                    <li class="social-linkedin"><a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-pinterest.svg' %}" alt=""></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>        
+        </div>
+        </div>
+    </div>
+  
+    
+    <header class="header-area header-style-1 header-height-2">
+        <div class="header-top header-top-ptb-1 d-none d-lg-block">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-xl-3 col-lg-4">
+                        <div class="header-info">
+                            <ul>
+                                <li><i class="fi-rs-smartphone"></i> <a href="#">(+01) - 2345 - 6789</a></li>
+                                <li><i class="fi-rs-marker"></i><a  href="page-contact.html">Our location</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-4">
+                        <div class="text-center">
+                            <div id="news-flash" class="d-inline-block">
+                                {% comment %} <ul>
+                                    <li>Get great devices up to 50% off <a href="shop-grid-right.html">View details</a></li>
+                                    <li>Supper Value Deals - Save more with coupons</li>
+                                    
+                                    <li>Trendy 25silver jewelry, save up 35% off today <a href="shop-grid-right.html">Shop now</a></li>
+                                </ul> {% endcomment %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4">
+                        <div class="header-info header-info-right">
+                            <ul>
+                                <li>
+                                    <a class="language-dropdown-active" href="#"> <i class="fi-rs-world"></i> English <i class="fi-rs-angle-small-down"></i></a>
+                                    <ul class="language-dropdown">
+                                        <li><a href="#"><img src="{% static 'assets/imgs/theme/flag-fr.png' %}" alt="">Français</a></li>
+                                        <li><a href="#"><img src="{% static 'assets/imgs/theme/flag-dt.png' %}" alt="">Deutsch</a></li>
+                                        <li><a href="#"><img src="{% static 'assets/imgs/theme/flag-ru.png' %}" alt="">Pусский</a></li>
+                                    </ul>
+                                </li>
+                                {% if request.user.is_authenticated %}
+                                    {% comment %} <li><i class="fi-rs-user"></i><a href="{% url 'accounts:user-logout' %}">Log Out</a></li> {% endcomment %}
+                 
+                                    <li class="dropdown nav-item">
+                                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false">
+                                            <img class="img-xs rounded-circle" src="{% static "assets/assets-back/imgs/people/avatar1.jpg" %}" alt="User" style="width: 40px; height: 40px;">
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount" >
+                                            {% if user.is_authenticated %}
+                                            <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>{{user.username}}</a>
+                                            <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>{{user.email}}</a>
+                                            {% endif %} 
+                                            <div class="dropdown-divider"></div>
+
+
+
+                                            <a class="dropdown-item" href="{% url "user:edit_profile" %}"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
+                                            <a class="dropdown-item" href="{% url "user:manage_address" %}"><i class="material-icons md-settings"></i>Manage Address</a>
+                                            {% comment %} <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a> {% endcomment %}
+                                            <a class="dropdown-item" href="{% url "orders:my_orders" %}"><i class="material-icons md-help_outline"></i>My Orders</a> 
+                                            <a class="dropdown-item" href="{% url "user:my_wallet" %}"><i class="material-icons md-help_outline"></i>Wallet</a> 
+                                            <a class="dropdown-item" ><button  class="material-icons md-help_outline" onclick="copyToClipBoard()">Copy Invitation Code</button></a> 
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item text-danger" href="{% url 'accounts:user-logout' %}"><i class="material-icons md-exit_to_app"></i>Logout</a>
+                                           <input type="hidden" value="{{user.referral_id}}" id="invitation">
+                                        </div>
+                                    </li>
+                                                                                   
+                
+                              
+                
+                                {% else %}
+                                    <li><i class="fi-rs-user"></i><a href="{% url 'accounts:user-login' %}">Log In</a></li>
+                                    <li><i class="fi-rs-user"></i><a href="{% url 'accounts:register' %}">Sign Up</a></li>
+                                {% endif %}
+                                
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
+            <div class="container">
+                <div class="header-wrap">
+                    <div class="logo logo-width-1">
+                        <a  href="{% url "app:index" %}" ><img style="width: 10px; ,height:10px"  src="{% static '/assets/imgs/theme/logo2.png' %}" alt="logo"></a>
+                    </div>
+                    <div class="header-right">
+                        <div class="search-style-2">
+                            <form action="#">
+                               
+                                <input type="text" placeholder="Search for items...">
+                            </form>
+                        </div> 
+                        <div class="header-action-right">
+                            <div class="header-action-2">
+                                <div class="header-action-icon-2">
+                                    <a href="shop-wishlist.html">
+                                        <img class="svgInject" alt="Evara" src="{% static 'assets/imgs/theme/icons/icon-heart.svg' %}">
+                                        <span class="pro-count blue">4</span>
+                                    </a>
+                                </div>
+                                <div class="header-action-icon-2">
+                                    <a class="mini-cart-icon" href="{% url "cart:cart" %}">
+                                        <img alt="Evara" src="{% static 'assets/imgs/theme/icons/icon-cart.svg' %}">
+                                        <span class="pro-count blue">4</span>
+                                    </a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom header-bottom-bg-color sticky-bar">
+            <div class="container">
+                <div class="header-wrap header-space-between position-relative">
+                    <div class="logo logo-width-1 d-block d-lg-none">
+                        <a href="index.html"><img src="assets/imgs/theme/logo2.png" alt="logo"></a>
+                    </div>
+                    <div class="header-nav d-none d-lg-flex">
+                        <div class="main-categori-wrap d-none d-lg-block">
+                            <a class="categori-button-active" href="#">
+                                <span class="fi-rs-apps"></span> Browse Categories
+                            </a>
+                            <div class="categori-dropdown-wrap categori-dropdown-active-large">
+                                {% for cat in categories %}
+                                <ul>
+                                  
+                                    
+                                    <li class="has-children"> 
+                                        <a href="{% url "category:shop_by_category" cat.category_name %}" ><i class="evara-font-dress"></i>{{cat.category_name}} </a>
+                                        <div class="dropdown-menu">
+                                            <ul class="mega-menu d-lg-flex">
+                                                <li class="mega-menu-col col-lg-7">
+                                                    <ul class="d-lg-flex">
+                                                        <li class="mega-menu-col col-lg-6">
+
+                                                        </li>
+                                                        <li class="mega-menu-col col-lg-6">
+                                                            
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    
+                                    
+                                   
+                                    <li>
+                                    </li>
+                                    
+                                </ul>{% endfor %}
+                                {% comment %} <div class="more_categories">Show more...</div> {% endcomment %}
+                            </div>
+                        </div>
+                        <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
+                            <nav>
+                                <ul>
+                                    <li><a class="active" href="{% url "app:index" %}">Home <i class=""></i></a>
+
+                                    </li>
+                                    <li>
+                                        <a href="#">About</a>
+                                    </li>
+                                    <li><a href="{% url "product:shop" %}">Shop</a>
+                                        
+                                    </li>
+                                    
+                                    
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="hotline d-none d-lg-block">
+                        {% comment %} <p><i class="fi-rs-headset"></i><span>Hotline</span> 1900 - 888 </p> {% endcomment %}
+                    </div>
+                    <p class="mobile-promotion">Happy <span class="text-brand">Mother's Day</span>. Big Sale Up to 40%</p>
+                    <div class="header-action-right d-block d-lg-none">
+                        <div class="header-action-2">
+                            <div class="header-action-icon-2">
+                                <a href="shop-wishlist.html">
+                                    <img alt="Evara" src="assets/imgs/theme/icons/icon-heart.svg">
+                                    <span class="pro-count white">4</span>
+                                </a>
+                            </div>
+                            <div class="header-action-icon-2">
+                                <a class="mini-cart-icon" href="shop-cart.html">
+                                    <img alt="Evara" src="{% static 'assets/imgs/theme/icons/icon-cart.svg' %}">
+                                    <span class="pro-count white">2</span>
+                                </a>
+                                <div class="cart-dropdown-wrap cart-dropdown-hm2">
+                                    <ul>
+                                        <li>
+                                            <div class="shopping-cart-img">
+                                                <a href="shop-product-right.html"><img alt="Evara" src="{% static 'assets/imgs/shop/thumbnail-3.jpg' %}"></a>
+                                            </div>
+                                            <div class="shopping-cart-title">
+                                                <h4><a href="shop-product-right.html">Plain Striola Shirts</a></h4>
+                                                <h3><span>1 × </span> &#8377  800.00</h3>
+                                            </div>
+                                            <div class="shopping-cart-delete">
+                                                <a href="#"><i class="fi-rs-cross-small"></i></a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="shopping-cart-img">
+                                                <a href="shop-product-right.html"><img alt="Evara" src="{% static 'assets/imgs/shop/thumbnail-4.jpg' %}"></a>
+                                            </div>
+                                            <div class="shopping-cart-title">
+                                                <h4><a href="shop-product-right.html">Macbook Pro 2022</a></h4>
+                                                <h3><span>1 × </span> &#8377  3500.00</h3>
+                                            </div>
+                                            <div class="shopping-cart-delete">
+                                                <a href="#"><i class="fi-rs-cross-small"></i></a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="shopping-cart-footer">
+                                        <div class="shopping-cart-total">
+                                            <h4>Total <span> &#8377  383.00</span></h4>
+                                        </div>
+                                        <div class="shopping-cart-button">
+                                            <a href="shop-cart.html">View cart</a>
+                                            <a href="shop-checkout.html">Checkout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="header-action-icon-2 d-block d-lg-none">
+                                <div class="burger-icon burger-icon-white">
+                                    <span class="burger-icon-top"></span>
+                                    <span class="burger-icon-mid"></span>
+                                    <span class="burger-icon-bottom"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="mobile-header-active mobile-header-wrapper-style">
+        <div class="mobile-header-wrapper-inner">
+            <div class="mobile-header-top">
+                <div class="mobile-header-logo">
+                    <a href="index.html"><img src="{% static 'assets/imgs/theme/logo2.png' %}" alt="logo"></a>
+                </div>
+                <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
+                    <button class="close-style search-close">
+                        <i class="icon-top"></i>
+                        <i class="icon-bottom"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="mobile-header-content-area">
+                <div class="mobile-search search-style-3 mobile-header-border">
+                    <form action="#">
+                        <input type="text" placeholder="Search for items…">
+                        <button type="submit"><i class="fi-rs-search"></i></button>
+                    </form>
+                </div>
+                <div class="mobile-menu-wrap mobile-header-border">
+                    <div class="main-categori-wrap mobile-header-border">
+                        <a class="categori-button-active-2" href="#">
+                            <span class="fi-rs-apps"></span> Browse Categories
+                        </a>
+                       
+                    </div>
+                    
+                </div>
+                <div class="mobile-header-info-wrap mobile-header-border">
+                    <div class="single-mobile-header-info mt-30">
+                        <a  href="page-contact.html"> Our location </a>
+                    </div>
+                    <div class="single-mobile-header-info">
+                        <a href="page-login-register.html">Log In / Sign Up </a>
+                    </div>
+                    <div class="single-mobile-header-info">
+                        <a href="#">(+01) - 2345 - 6789 </a>
+                    </div>
+                </div>
+                <div class="mobile-social-icon">
+                    <h5 class="mb-15 text-grey-4">Follow Us</h5>
+                    <a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-facebook.svg' %}" alt=""></a>
+                    <a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-twitter.svg' %}" alt=""></a>
+                    <a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-instagram.svg' %}" alt=""></a>
+                    <a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-pinterest.svg' %}" alt=""></a>
+                    <a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-youtube.svg' %}" alt=""></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <main class="main">       
+        <section class="home-slider position-relative pt-50">
+            <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
+                <div class="single-hero-slider single-animation-wrap">
+                    <div class="container">
+                        <div class="row align-items-center slider-animated-1">
+                            <div class="col-lg-5 col-md-6">
+                                <div class="hero-slider-content-2">
+                                    <h4 class="animated">Trade-in offer</h4>
+                                    <h2 class="animated fw-900">Supper value deals</h2>
+
+                                    <h1 class="animated fw-900 text-brand">On all products</h1>
+                                    <p class="animated">Save more with coupons & up to 70% off</p>
+                                    <a class="animated btn btn-brush btn-brush-3" href="shop-product-right.html"> Shop Now </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-6">
+                                <div class="single-slider-img single-slider-img-1">
+                                    <img class="animated slider-1-1" src="{% static 'assets\imgs\slider\sliderwhite.jpg' %}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-hero-slider single-animation-wrap">
+                    <div class="container">
+                        <div class="row align-items-center slider-animated-1">
+                            <div class="col-lg-5 col-md-6">
+                                <div class="hero-slider-content-2">
+                                    <h4 class="animated">Enjoy</h4>
+                                    <h2 class="animated fw-900">Exclusive Offer</h2>
+                                    <h1 class="animated fw-900 text-7">Great Collection</h1>
+                                    <p class="animated">Save more with coupons & up to 20% off</p>
+                                    <a class="animated btn btn-brush btn-brush-2" href="shop-product-right.html"> Discover Now </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-6">
+                                <div class="single-slider-img single-slider-img-1">
+                                    <img class="animated slider-1-2" src="{% static 'assets\imgs\slider\white3.png' %}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-hero-slider single-animation-wrap">
+                    <div class="container">
+                        <div class="row align-items-center slider-animated-1">
+                            <div class="col-lg-5 col-md-6">
+                                <div class="hero-slider-content-2">
+                                    <h4 class="animated">Upcoming Offer</h4>
+                                    <h2 class="animated fw-900">Big Deals From</h2>
+                                    <h1 class="animated fw-900 text-8">Manufacturer</h1>
+                                    <p class="animated">Chronographic, Smart watch, Digital..</p>
+                                    <a class="animated btn btn-brush btn-brush-1" href="shop-product-right.html"> Shop Now </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-6">
+                                <div class="single-slider-img single-slider-img-1">
+                                    <img class="animated slider-1-3" src="{% static 'assets\imgs\slider\clock-detail-jewelry-luxury-wallpaper-preview.jpg' %}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-arrow hero-slider-1-arrow"></div>
+        </section>
+        <section class="featured section-padding position-relative">            
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+                        <div class="banner-features wow fadeIn animated hover-up">
+                            <img src="{% static 'assets/imgs/theme/icons/feature-1.png' %}" alt="">
+                            <h4 class="bg-1">Free Shipping</h4>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+                        <div class="banner-features wow fadeIn animated hover-up">
+                            <img src="{% static 'assets/imgs/theme/icons/feature-2.png' %}" alt="">
+                            <h4 class="bg-3">Online Order</h4>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+                        <div class="banner-features wow fadeIn animated hover-up">
+                            <img src="{% static 'assets/imgs/theme/icons/feature-3.png' %}" alt="">
+                            <h4 class="bg-2">Save Money</h4>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+                        <div class="banner-features wow fadeIn animated hover-up">
+                            <img src="{% static 'assets/imgs/theme/icons/feature-4.png' %}" alt="">
+                            <h4 class="bg-4">Promotions</h4>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+                        <div class="banner-features wow fadeIn animated hover-up">
+                            <img src="{% static 'assets/imgs/theme/icons/feature-5.png' %}" alt="">
+                            <h4 class="bg-5">Happy Sell</h4>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+                        <div class="banner-features wow fadeIn animated hover-up">
+                            <img src="{% static 'assets/imgs/theme/icons/feature-6.png' %}" alt="">
+                            <h4 class="bg-6">24/7 Support</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-padding">
+            <div class="container">
+                <h3 class="section-title mb-20 wow fadeIn animated"><span>Featured</span> Brands</h3>
+                
+                <div class="carausel-6-columns-cover position-relative wow fadeIn animated">
+                    <div class="slider-arrow slider-arrow-2 carausel-6-columns-arrow" id="carausel-6-columns-3-arrows"></div>
+                    
+                    <div class="carausel-6-columns text-center" id="carausel-6-columns-3">
+                        
+                        {% for br in brand %}
+                        <div class="brand-logo">                          
+                            
+                            <img class="img-grey-hover"  src="{{ br.logo.url }}" alt="">
+                            
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+
+
+
+    
+        <section class="product-tabs section-padding position-relative wow fadeIn animated">
+            <div class="bg-square"></div>
+            <div class="container">
+                <div class="tab-header">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="nav-tab-one" data-bs-toggle="tab" data-bs-target="#tab-one" type="button" role="tab" aria-controls="tab-one" aria-selected="true">Featured</button>
+                        </li>
+                        {% comment %} <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="nav-tab-two" data-bs-toggle="tab" data-bs-target="#tab-two" type="button" role="tab" aria-controls="tab-two" aria-selected="false">Popular</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="nav-tab-three" data-bs-toggle="tab" data-bs-target="#tab-three" type="button" role="tab" aria-controls="tab-three" aria-selected="false">New added</button>
+                        </li> {% endcomment %}
+                    </ul>
+                    {% comment %}  <a href="#" class="view-more d-none d-md-flex">View More<i class="fi-rs-angle-double-small-right"></i></a> {% endcomment %}
+                </div>
+                
+
+
+
+
+
+
+
+                <!--End nav-tabs-->
+                <div class="tab-content wow fadeIn animated" id="myTabContent">
+                    <div class="tab-pane fade show active" id="tab-one" role="tabpanel" aria-labelledby="tab-one">
+                        <div class="row product-grid-4">
+
+                         
+ 
+                            {% for product in products %}
+                           
+                            <div class="col-lg-3 col-md-4 col-12 col-sm-6">
+                               
+                                <div class="product-cart-wrap mb-30">
+                                    <div class="product-img-action-wrap">
+                                        <div class="product-img product-img-zoom">
+                                            <a href= "{% url 'product:product_details' product.id %}">
+                                                <img class="default-img" src="{{product.images.url}}" >
+                                                <img class="hover-img" src="{{product.images.url}}" >
+                                            </a>
+                                        </div>
+                                        <div class="product-action-1">
+                                            {% comment %} <a aria-label="Quick view" class="action-btn hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a> {% endcomment %}
+                                            <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
+                                            {% comment %} <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a> {% endcomment %}
+                                        </div>
+                                        <div class="product-badges product-badges-position product-badges-mrg">
+                                            <span class=""></span>
+                                        </div>
+                                    </div>
+                                    <div class="product-content-wrap">
+                                        <div class="product-category">
+                                            <a href="shop-grid-right.html">{{ product.category }}</a>
+                                        </div>
+                                        <h2><a href="shop-product-right.html">{{product.product_name}}</a></h2>
+                                        
+                                        {% if product.max_price != product.price %}
+                                            
+                                        <div class="product-price">
+                                            <span> &#8377  {{product.price}} </span>
+                                  
+                                            <span class="old-price"> &#8377  {{product.max_price}}</span>
+                                        </div>
+
+                                        {% elif product.max_price == product.price %}
+
+                                        <div class="product-price">
+                                            <span> &#8377  {{product.max_price}} </span>
+                                  
+                                        </div>
+                                        {% endif %}
+
+                                        <div class="product-action-1 show">
+                                            <button id="product_id" aria-label="Add To Cart" class="action-btn hover-up" onclick="add_to_cart_icon({{ product.id }})" ><i class="fi-rs-shopping-bag-add"></i></button>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+                            {% endfor %}  
+                            
+                           
+                   
+    
+                            
+                            
+                            
+                            
+                        </div>
+                        <!--End product-grid-4-->
+                    </div>
+                    <!--En tab one (Featured)-->
+                    
+                    <div class="tab-pane fade" id="tab-two" role="tabpanel" aria-labelledby="tab-two">
+                        
+                            
+                            
+                        <!--End product-grid-4-->
+                    </div>
+                    <!--En tab two (Popular)-->
+                    
+                    <!--En tab three (New added)-->
+                </div>
+                <!--End tab-content-->
+            </div>
+        </section>
+
+        
+
+
+       
+        <section class="popular-categories section-padding mt-15 mb-25">
+            <div class="container wow fadeIn animated">
+                <h3 class="section-title mb-20"><span>Popular</span> Categories</h3>
+                <div class="carausel-6-columns-cover position-relative">
+                    <div class="slider-arrow slider-arrow-2 carausel-6-columns-arrow" id="carausel-6-columns-arrows"></div>
+                    <div class="carausel-6-columns" id="carausel-6-columns">
+                        {% for cat in categories %}
+                        <div class="card-1">
+                            <figure class=" img-hover-scale overflow-hidden">
+                                <a href="{% url "category:shop_by_category" cat.category_name %}"><img src="{{cat.cat_image.url}}" alt=""></a>
+                            </figure>
+                            <h5><a href="{% url "category:shop_by_category" cat.category_name %}">{{cat.category_name}}</a></h5>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-padding">
+            <div class="container wow fadeIn animated">
+                <h3 class="section-title mb-20"><span>New</span> Arrivals</h3>
+                <div class="carausel-6-columns-cover position-relative">
+                    
+                    <div class="slider-arrow slider-arrow-2 carausel-6-columns-arrow" id="carausel-6-columns-2-arrows"></div>
+
+                    <div class="carausel-6-columns carausel-arrow-center" id="carausel-6-columns-2">
+                        {% for product in products %}
+                        <div class="product-cart-wrap small hover-up">
+                            <div class="product-img-action-wrap">
+                                <div class="product-img product-img-zoom">
+                                    <a href= "{% url 'product:product_details' product.id %}">
+                                        <img class="default-img" src="{{product.images.url}}" alt="">
+                                        <img class="hover-img" src="{{product.images.url}}" alt="">
+                                    </a>
+                                </div>
+                                <div class="product-action-1">
+                                    {% comment %} <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a> {% endcomment %}
+                                    <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html" tabindex="0"><i class="fi-rs-heart"></i></a>
+                                    {% comment %} <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html" tabindex="0"><i class="fi-rs-shuffle"></i></a> {% endcomment %}
+                                </div>
+                                <div class="product-badges product-badges-position product-badges-mrg">
+                                    <span class="hot">Hot</span>
+                                </div>
+                            </div>
+                            <div class="product-content-wrap">
+                                <h2><a href="shop-product-right.html">{{product.product_name}}</a></h2>
+                               
+                                <div class="product-price">
+                                    <span> &#8377  {{product.price}} </span>
+                                    <span class="old-price"></span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <!--End product-grid-4-->
+                        
+
+                       
+                        <!--End product-cart-wrap-2-->
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </section> 
+        
+    <!-- Vendor JS-->
+    <script src="{% static 'assets/js/vendor/modernizr-3.6.0.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/jquery-3.6.0.min.js' %} "></script>
+    <script src="{% static 'assets/js/vendor/jquery-migrate-3.3.0.min.js' %} "></script>
+    <script src="{% static 'assets/js/vendor/bootstrap.bundle.min.js' %} "></script>
+    <script src="{% static 'assets/js/plugins/slick.js' %} "></script>
+    <script src="{% static 'assets/js/plugins/jquery.syotimer.min.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/wow.js' %} "></script>
+    <script src="{% static 'assets/js/plugins/jquery-ui.js' %} "></script>
+    <script src="{% static 'assets/js/plugins/perfect-scrollbar.js' %} "></script>
+    <script src="{% static 'assets/js/plugins/magnific-popup.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/select2.min.js' %} "></script>
+    <script src="{% static 'assets/js/plugins/waypoints.js' %} "></script>
+    <script src="{% static 'assets/js/plugins/counterup.js' %} "></script>
+    <script src="{% static 'assets/js/plugins/jquery.countdown.min.js' %} "></script>
+    <script src="{% static 'assets/js/plugins/images-loaded.js' %} "></script>
+    <script src="{% static 'assets/js/plugins/isotope.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/scrollup.js' %} "></script>
+    <script src="{% static 'assets/js/plugins/jquery.vticker-min.js' %} "></script>
+    <script src="{% static 'assets/js/plugins/jquery.theia.sticky.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/jquery.elevatezoom.js' %}"></script>
+    <!-- Template  JS -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    <script src="{% static 'assets/js/shop.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- alertify -->
+
+    <!-- JavaScript -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<script>
+    alertify.set('notifier', 'position', 'top-center');
+
+    {% for msg in messages %}
+        {% if 'error' in msg.tags %}
+            alertify.error('{{ msg }}');
+        {% elif 'warning' in msg.tags %}
+            alertify.warning('{{ msg }}');
+        {% else %}
+            alertify.success('{{ msg }}');
+        {% endif %}
+    {% endfor %}
+</script>
+
+
+<script>
+
+function copyToClipBoard() {
+    alertify.set('notifier', 'position', 'middle-center');
+        let val = document.getElementById('invitation').value
+        navigator.clipboard.writeText(val)
+                .then(function() {
+                    alertify.success('Code copied to clipboard!');
+                })
+                .catch(function(error) {
+                    console.error('Error copying to clipboard: ', error);
+                    alertify.error('Something went wrong');
+                });
+    }
+
+</script>
+
+</body>
+
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:25:49 GMT -->
+</html>
+

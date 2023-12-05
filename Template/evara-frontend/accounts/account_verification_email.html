@@ -1,0 +1,67 @@
+{% comment %} 
+<!-- templates/user_side/forgot_password.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Forgot Password</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <h1 class="text-center mb-4">Forgot Password</h1>
+                    <form method="post" class="mb-4" action="{% url 'account:forgot_password' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="password">enter your email:</label>
+                            <input type="email" name="email" class="form-control" required>
+                            <label for="password">enter your password:</label>
+                            <input type="password" name="password" class="form-control" required>
+                            <label for="password">re-enter your password:</label>
+                            <input type="password" name="re_password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Send OTP</button>
+                    </form>
+                    <div class="text-center">
+                        <a href="{% url 'account:user-login' %}" class="btn btn-link">Back to Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS (Optional) -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- altertify -->
+
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	<script>
+		alertify.set('notifier','position', 'top-center');
+		{% for msg in messages %}
+	
+			alertify.success('{{msg}}');
+		{%endfor%}
+		 
+	</script>
+</body>
+</html> {% endcomment %}
+{% autoescape off %}
+    
+{% endautoescape %}

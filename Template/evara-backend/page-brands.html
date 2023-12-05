@@ -1,0 +1,69 @@
+{% extends 'evara-backend/base.html' %}
+{% load static %}
+{% block content %}
+
+{% for message in messages %}
+<div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+  <strong></strong>{{message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+        <section class="content-main">
+            <div class="content-header">
+                <div>
+                    <h2 class="content-title card-title">Brand </h2>
+                    <p>Brand  management</p>
+                </div>
+                <div>
+                    <a href="{% url "brand:add_brand" %}" class="btn btn-primary"><i class="text-muted material-icons md-post_add"></i>Add New Brand</a>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <header class="card-header">
+                   
+                </header> <!-- card-header end// -->
+                
+                <div class="card-body">
+                    <div class="row gx-3">
+                        {% for br in brand %}
+                        <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                          <figure class="card border-1">
+                            <div class="card-header bg-white text-center">
+                              {% if br.logo or br.brand_name %}
+                                <img height="76" src="{{ br.logo.url }}" class="img-fluid" alt="Logo" style="width:140px; height:70px;" >
+                              {% endif %}
+                            </div>
+                            <figcaption class="card-body text-center">
+                              <h6 class="card-title m-0">{{ br.brand_name }}</h6>
+                              <a href="#"> {{br.product.}}</a>
+
+                              <div class="text-end d-flex flex-row ">
+                                <a href="{% url 'brand:edit_brand' id=br.id %}" class="btn btn-light rounded btn-sm font-sm">
+                                    Edit
+                                </a>
+                                            
+                                    {% if br.soft_deleted %}
+                                    <a href="{% url 'brand:admn_enable_disable_brand' id=br.id %}" class="btn btn-danger rounded btn-sm font-sm">
+                                        Disable
+                                    </a>
+                                    {% else %}
+                                    <a href="{% url 'brand:admn_enable_disable_brand' id=br.id %}" class="btn btn-success rounded btn-sm font-sm">
+                                        Enable
+                                    </a>
+                                    {% endif %}
+                                    {% comment %} <a class="btn btn-light rounded btn-sm font-sm">
+                                        Delete
+                                    </a>     {% endcomment %}
+                              </div>
+
+                            </figcaption>
+                          </figure>
+                        </div>
+                      {% endfor %}
+                    </div> <!-- row.// -->
+                </div> <!-- card-body end// -->
+                
+            </div> <!-- card end// -->
+        </section> <!-- content-main end// -->
+        {% endblock content %}

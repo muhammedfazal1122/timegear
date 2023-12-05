@@ -1,0 +1,147 @@
+{% extends 'evara-frontend/base.html' %}
+
+{% block content %}
+    <main class="main">
+       
+        
+        
+        <section class="section-padding footer-mid">
+            
+            {% if orders %}
+            <div class="container pt-15 pb-20">
+                <div class="row">
+          
+                    {% for order in orders %}
+                        <div class="login_wrap widget-taber-content bg-white shadow p-5 mx-10 mb-4
+                            background-white border-radius-5 border-light">
+                            <div class="d-flex flex-row justify-content-between">
+                                <span class="mx-3">{{ order.created_at }}</span>
+                                {% if order.status == "Pending" %}
+                                <span class="mx-3" style="color:blue; border: 3px solid blue; padding: 5px; border-radius: 5px; ">{{ order.status }}</span>
+                                {% elif order.status == "Cancelled" %}
+                                <span class="mx-3" style="color:red; border: 3px solid red; padding: 5px; border-radius: 5px; ">{{ order.status }}</span>
+                                {% elif order.status == "Shipped" %}
+                                <span class="mx-3" style="color:rgb(93, 187, 235); border: 3px solid rgb(93, 187, 235); padding: 5px; border-radius: 5px; ">{{ order.status }}</span>
+                                {% elif order.status == "Delivered" %}
+                                <span class="mx-3" style="color:rgb(93, 235, 124); border: 3px solid rgb(93, 235, 124); padding: 5px; border-radius: 5px; ">{{ order.status }}</span>
+                                {% elif order.status == "Returned" %}
+                                <span class="mx-3" style="color:rgb(0, 125, 27); border: 3px solid rgb(0, 125, 27); padding: 5px; border-radius: 5px; ">{{ order.status }}</span>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <span class="mx-3 " style="color: rgb(0, 164, 38);">Transaction ID :{{ order.payment.payment_id }}</span>
+                            </div>
+
+                            <!-- DIVIDER STARTS -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="divider mt-5 mb-5"></div>
+                                </div>
+                            </div>
+                            <!-- DIVIDER ENDS -->
+
+                            {% for order_product in order.orderproduct_set.all %}
+                                <div class="d-flex flex-row justify-content-evenly">
+                                    <div class="col-lg-3 p-3 m-2 bg-white border border-dark rounded d-flex justify-content-center">
+                                        <img class="default-img" src="{{ order_product.product.images.url }}" style="height: 100px; width: 100px;" alt="">
+                                    </div>
+                                    <div class="col-lg-6 d-flex align-items-center">
+                                        <h5 class="product-name d-flex flex-column">
+                                            <a href="#">
+                                                <span class="h5">{{ order_product.product.product_name }}</span>
+                                            </a>
+                                        </h5>
+                                    </div>
+                                    <div class="col-lg-3 d-flex align-items-center">
+                                        <div>
+                                            <div><span class="h6 mb-2">PRICE: &#8377; {{ order_product.product_price}}</span></div>
+                                            <div><span class="h6 mt-2">quantity: {{ order_product.quantity }}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            {% endfor %}
+                            <div>
+                                <span class="mx-3 " style="color: rgb(0, 14, 164);">Transaction ID : &nbsp{{ order.payment.payment_method }}</span>
+                            </div>
+                            <!-- DIVIDER STARTS -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="divider mt-5 mb-5"></div>
+                                </div>
+                            </div>
+                            <!-- DIVIDER ENDS -->
+
+                            <div class="d-flex flex-row align-items-center justify-content-between mt-25">
+                                <div>
+                                    <label for="orderID1"></label>
+                                    <input type="number" id="orderID1" value="{{ order.id }}" hidden="hidden">
+                                    {% if order.status == "Pending" or order.status == "Shipped" %}
+                                    <form action="{% url 'orders:cancel_order' order.id %}" method="post" id="cancelOrderForm">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="cancellation_reason" id="cancellationReason">
+                                        <button type="button" onclick="Confirm()" class="btn btn-outline-warning">
+                                            <i class="material-icons md-close"></i>
+                                            <span>Cancel Order</span>
+                                        </button>
+                                        <a href="{% url "orders:ordered_product_detailes" order.id %}" class="btn btn-primary mr-2">Order Details</a>
+
+                                    </form>
+                                    {% else %}
+
+                                    {% endif %}
+                                    </div>
+                                    
+                                <div><span>{{ order.paymentMethod }}</span></div>
+                                <div><span class="font-lg font-weight-bolder text-dark">TOTAL : &#8377; {{ order.total }}</span></div>
+                            </div>
+                        </div>
+                     
+                    
+         
+                    {% endfor %}
+
+                </div>
+            </div>
+            {% else %}
+                  
+                        <div>
+                            <h2 style="color: red;">
+                                You have No Orders Yet
+                            </h2>
+                        </div>
+            {% endif %}
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+
+
+    <script>
+        function Confirm() {
+            Swal.fire({
+                title: 'Are you sure?',
+                html: '<label for="swal-input1">Reason for Cancellation:</label><textarea id="swal-input1" class="swal2-input" rows="2" style="resize: vertical;" placeholder="Enter your reason here..."></textarea>',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No, cancel',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Retrieve the reason from the input field
+                    const cancellationReason = document.getElementById('swal-input1').value;
+                    // Set the reason in the hidden form field
+                    document.getElementById('cancellationReason').value = cancellationReason;
+                    // Submit the form
+                    document.getElementById('cancelOrderForm').submit();
+                }
+            });
+        }
+    </script>
+    
+
+
+    
+{% endblock %}

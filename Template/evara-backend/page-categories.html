@@ -1,0 +1,97 @@
+{% extends 'evara-backend/base.html' %}
+{% load static %}
+{% block content %}
+
+{% for message in messages %}
+<div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+  <strong></strong>{{message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+
+        <section class="content-main">
+            <div class="content-header">
+                <div>
+                    <h2 class="content-title card-title">Categories </h2>
+                    <p>Add, edit or delete a category</p>
+                </div>
+                {% comment %} <div>
+                    <input type="text" placeholder="Search Categories" class="form-control bg-white">
+                </div> {% endcomment %}
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" />
+                                                </div>
+                                            </th>
+                                            <th>ID</th>
+                                            <th>Image</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Slug</th>
+                                            <th class="text-end">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>                                      
+                                       {% for cat in categories %}
+                                        <tr>
+                                            <td class="text-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" />
+                                                </div>
+                                            </td>
+                                            <td>{{cat.id}}</td>
+                                            <td>
+                                                
+                                                    {% if cat.cat_image %}
+                                                    <img src="{{cat.cat_image.url}}" class="img-sm img-thumbnail" alt="Item">
+                                                    {% else %}
+                                                    <img src="" class="img-sm img-thumbnail" alt="Item">
+                                                    {% endif %}
+                                                
+                                            </td>
+                                            <td><b>{{cat.category_name}}</b></td>
+                                            <td>{{cat.descreption}}</td>
+                                            <td>{{cat.slug}}</td>
+                                            <td class="text-end">
+                                                <a href="{% url 'category:admn_edit_category' cat.id %}" class="btn btn-light rounded btn-sm font-sm">
+                                                    Edit
+                                                </a>
+                                                            
+                                                    {% if cat.soft_deleted %}
+                                                    <a href="{% url 'category:admn_enable_disable_categories' cat.id %}" class="btn btn-danger rounded btn-sm font-sm">
+                                                        Disable
+                                                    </a>
+                                                    {% else %}
+                                                    <a href="{% url 'category:admn_enable_disable_categories' cat.id %}" class="btn btn-success rounded btn-sm font-sm">
+                                                        Enable
+                                                    </a>
+                                                    {% endif %}
+                                                    {% comment %} <a href=" {% url 'category:admn_delete_categories' cat.id %}"class="btn btn-light rounded btn-sm font-sm">
+                                                        Delete
+                                                    </a>     {% endcomment %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+                                <div class="d-grid">
+                                    <a class="btn btn-primary" href="{% url "category:admn_add_category" %}">Create category</a>
+                                </div>
+                            </div>
+                        </div> <!-- .col// -->
+                    </div> <!-- .row // -->
+                </div> <!-- card body .// -->
+            </div> <!-- card .// -->
+        </section> <!-- content-main end// -->
+        {% endblock content %}

@@ -1,0 +1,78 @@
+{% extends "evara-backend/base.html" %}
+{% load static %}
+{% block content %}
+
+
+{% for message in messages %}
+<div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+  <strong></strong>{{message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+        <section class="content-main">
+            <div class="content-header">
+                <div>
+                    <h2 class="content-title card-title">Add Categories </h2>
+                </div>
+                <div>
+                    <input type="text" placeholder="Search Categories" class="form-control bg-white">
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <form method="post" action="{% url 'category:admn_add_category' %}" enctype="multipart/form-data">{% csrf_token %}
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Name</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="product_name" name="category_name" />
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_slug" class="form-label">Slug</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="product_slug" name="slug"/>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Description</label>
+                                    <textarea placeholder="Type here" class="form-control" name="description"></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label" for="category_images">Category Image:</label>
+                                    <input class="form-control" type="file" name="cat_image" accept="image/*" required><br>
+                                </div>
+
+                                <label for="discount" class="form-label">Discount</label>
+                                <input type="number" placeholder="Type here" class="form-control" id="discount" name="discount"  required oninput="validateDiscount(this)" />
+                                 </div>
+                                </div>
+                                <div class="mb-4">
+                                <label for="minimum_amount" class="form-label">minimum_amount </label>
+                                <input type="number" placeholder="Type here" class="form-control" id="minimum_amount" name="minimum_amount"  required oninput="validateDiscount(this)" />
+                                 </div>
+                                 <div class="mb-4">
+                                <label for="end_date" class="form-label"> End Date</label>
+                                <input type="date" placeholder="Type here" class="form-control" id="end_date" name="end_date" />
+                                 </div>
+        
+                                <div class="d-grid">
+                                    <button class="btn btn-primary">Create category</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div> <!-- .row // -->
+                </div> <!-- card body .// -->
+            </div> <!-- card .// -->
+        </section> <!-- content-main end// -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+ 
+        <script>
+            function validateDiscount(input) {
+                if (input.value < 0) {
+                    input.setCustomValidity('Value Cannot be less than 0.');
+                } else {
+                    input.setCustomValidity('');
+                }
+            }
+        </script>
+
+{% endblock content %}
+

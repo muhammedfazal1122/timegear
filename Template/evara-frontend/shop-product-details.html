@@ -1,0 +1,199 @@
+﻿{% extends 'evara-frontend/base.html' %}
+{% block title %}TimeMachine{% endblock title %}
+{% load static %}
+{% block content %}
+
+    <main class="main">
+  
+        <section class="mt-50 mb-50">
+            <div class="container">
+                <div class="row flex-row-reverse">
+                    <div class="col-lg-9">
+                        <div class="product-detail accordion-detail">
+                            <div class="row mb-50">
+                                
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                      
+                                    <div class="detail-gallery">
+                                        <span class="zoom-icon"><i class="fi-rs-search"></i></span>
+                                        <!-- MAIN SLIDES -->
+                                        
+                                        <div class="product-image-slider">
+                                            <figure class="border-radius-10">
+                                                <img src="{{products.images.url}}" alt="product image"  >
+                                            </figure>
+                                            {% comment %} <figure class="border-radius-10">
+                                                <img src="{{products.product_images1.url}}" alt="product image">
+                                            </figure> {% endcomment %}
+                                            <figure class="border-radius-10">
+                                                <img src="{{products.product_images2.url}}" alt="product image" >
+                                            </figure>
+                                            <figure class="border-radius-10">
+                                                <img src="{{products.product_images3.url}}">
+                                            </figure>
+                                            <figure class="border-radius-10">
+                                                <img src="{{products.product_images4.url}}" alt="product image">
+                                            </figure>
+                                            <figure class="border-radius-10">
+                                                <img src="{{products.product_images5.url}}" alt="product image">
+                                            </figure>
+                                            <figure class="border-radius-10">
+                                                <img src="{{products.product_images3.url}}" alt="product image" >
+                                            </figure>
+                                        </div>
+                                        <!-- THUMBNAILS -->
+                                        <div class="slider-nav-thumbnails pl-15 pr-15">
+                                            <div><img src="{{products.images.url}}" alt="product image"></div>
+                                            <div><img src="{{products.product_images2.url}}" alt="product image"></div>
+                                            <div><img src="{{products.product_images3.url}}" alt="product image"></div>
+                                            <div><img src="{{products.product_images4.url}}" alt="product image"></div>
+                                            <div><img src="{{products.product_images5.url}}" alt="product image"></div>
+                                            {% comment %} <div><img src="{{products.product_images4.url}}" alt="product image"></div> {% endcomment %}
+                                        </div>
+                                    </div>
+                                    <!-- End Gallery -->                                      
+                                                                                                            <!-- End Gallery -->
+                                    <div class="social-icons single-share">
+                                        <ul class="text-grey-5 d-inline-block">
+                                            <li><strong class="mr-10">Share this:</strong></li>
+                                            <li class="social-facebook"><a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-facebook.svg' %}" alt=""></a></li>
+                                            <li class="social-twitter"> <a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-twitter.svg' %}" alt=""></a></li>
+                                            <li class="social-instagram"><a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-instagram.svg' %}" alt=""></a></li>
+                                            <li class="social-linkedin"><a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-pinterest.svg' %}" alt=""></a></li>
+                                        </ul>
+                                    </div>
+                                   
+                                </div>
+                                
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+
+                                    <form action="{% url "cart:add_cart" product_id=products.id%}" method="POST">
+                                        {% csrf_token %}
+    
+
+                                    <div class="detail-info">
+                                        <h2 class="title-detail">{{products.product_name}}</h2>
+                                        <div class="product-detail-rating">
+                                            <div class="pro-details-brand">
+                                                <span> <strong>Brand  &nbsp;&nbsp;:</strong>   <a href="shop-grid-right.html"><strong>{{products.brand}}</strong></a></span>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="clearfix product-price-cover">
+                                            <div class="product-price primary-color float-left">
+                                                {% if products.price != products.max_price %}
+                                                <ins><span class="text-brand"> &#8377  {{products.price}}</span></ins>
+                                                <ins><span class="old-price font-md ml-15"> &#8377  {{products.max_price}}</span></ins>
+                                                {% else %}
+                                                <ins><span class="text-brand"> &#8377  {{products.price}}</span></ins>
+                                                {% endif %}
+                                                {% if products.category.discount != 0 %}
+
+                                                <div class="mt-15"  >
+                                                    <span class="mt-15"  style="color: #ff0000;"><i class="fi-rs-crown mr-5" style="color: #ff0000;"></i>This Category Have {{products.category.discount}}%  Offer </span>
+
+                                                </div>
+                                                {% endif %}
+
+                                                <!-- <span class="save-price  font-md color3 ml-15">{{products.offer_percentage}}%</span> -->
+                                            </div>
+                                        </div>
+                                        <div class="bt-1 border-color-1 mt-15 mb-15"></div>
+                                        <div class="short-desc mb-30">
+                                            <p>{{products.description}}</p>
+                                        </div>
+                                        <div class="product_sort_info font-xs mb-30">
+                                            <ul>
+                                               <li class="mb-10"><i class="fi-rs-crown mr-5"></i> 1 Year {{products.brand}} Brand Warranty </li>
+                                                <li class="mb-10"><i class="fi-rs-refresh mr-5"></i> 30 Day Return Policy</li>
+                                                <li><i class="fi-rs-credit-card mr-5"></i> Cash on Delivery available</li>
+                                            </ul>
+                                        </div>
+                                   
+                                        <div class="attr-detail attr-color mb-15">
+                                            <strong class="mr-10">Colour</strong>
+                                            <select name="colour" class="form-control" required>
+                                                <option value="" disabled selected>Select</option>
+                                                {% for i in products.variation_set.colour %}
+                                                <option value="{{i.variation_value }}">{{ i.variation_value }}</option>
+                                                {% endfor %}
+                                              </select>
+                                        </div>
+                                      
+                                    <form method="post" action="{% url 'cart:add_cart' products.id %}">
+                                        <div class="bt-1 border-color-1 mt-30 mb-30"></div>
+                                        <div class="detail-extralink">
+                                            <div class="detail-qty border radius">
+                                                <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                                                <span class="qty-val">1</span>
+                                                <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                                            </div>
+                                                {% csrf_token %}
+                                            <div class="product-extra-link2">
+                                                {% if products.stock == 0 %}
+                                                {% comment %} <button type="sdfg" href="" style="color: #ff0000; border-color: #ff0000; ">Currently Not Available</button> {% endcomment %}
+                                                <h2      style="color:#ff0000" >Currently Not Available</h2>
+                                                {% else %}
+                                                
+                                                <button type="submit" href="{% url "cart:add_cart" products.id %}" class="button button-add-to-cart">Add to cart</button>     
+                                                {% endif %}
+
+                                                <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
+                                                {% comment %} <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a> {% endcomment %}
+                                            </div>
+                                    </form>
+                                        </div>
+                                        <ul class="product-meta font-xs color-grey mt-50">
+                                            {% if products.stock == 0 %}
+                                            <li>Availability:<span class="in-stock text ml-5" style="color:#ff0000">OUT OF STOCK </span></li>
+                                            {% else %}
+                                            <li>Availability:<span class="in-stock text-success ml-5">{{products.stock}} Items In Stock</span></li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                    <!-- Detail Info -->
+                                </div>
+                              
+                            </div>
+
+                        
+                        </div>
+                    </div> 
+                    
+                </div>
+            </div>  
+        </section>
+    </main>
+
+
+
+
+
+
+    <script>
+        function add_to_cart_icon(product_id) {
+
+        $.ajax({
+        type: 'GET',
+        url: '/cart/add_to_cart_icon/product_id',
+        console.log('Esfgdgsgbsfbbsfta');
+        success: function(data) {
+
+           // if (data) alertify.success('Product successfully added to cart');
+           // else alertify.error("Something bbbbbbbbbbbbbbbbbwent wrong!!")
+        },
+        error: function() {
+            alertify.error("Somethinggggggggg went wrong!!!")
+            console.log('Error fetching user data');
+        }
+    });
+}
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+
+
+{% endblock content %}
+    
+ 

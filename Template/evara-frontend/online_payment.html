@@ -1,0 +1,222 @@
+{% extends 'evara-frontend/base.html' %}
+{% load static %}
+{% block title %}
+Online Payment
+{% endblock title %}
+
+
+
+{% block content %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+  <strong></strong>{{ message }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+
+
+<main class="main">
+
+    </div>
+    <section class="mt-50 mb-50">
+        <div class="container">
+            <h3 class="text-center mb-10">Review Your Order And Make Payment</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <h5 class="card-header">Billing Address</h5>
+                        <div class="card-body">
+                          <p class="card-text mb=0">{{order.first_name}}</p>
+                          <p class="card-text mb=0">{{order.last_name}}</p>   
+                          <p class="card-text mb=0">{{order.city}}, {{order.state}}</p>  
+                          <p class="card-text mb=0">{{order.country}}</p>
+                          {% comment %} <p class="card-text mb=0">{{order.email}}</p> {% endcomment %}
+                          <p class="card-text mb=0">{{order.phone}}</p>
+                          {% if order.order_note %}
+                            <b>Order Note:</b>{{order.order_note}}
+                          {% endif %}  
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h5 class="card-header">Review Products</h5>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">Product</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for ordered_product in ordered_products %}
+                                    <tr>
+                                        <td class="image product-thumbnail"><img src="{{ordered_product.product.images.url }}" alt="#"></td>
+                                        <td>
+                                            <h5><a href="shop-product-full.html">{{ordered_product.product.product_name}}</a></h5> <span class="product-qty">x {{ordered_product.quantity}}</span>
+                                            <p class="font-xs">
+                                              
+                                         
+                                                    {{ordered_product.variation_category | capfirst}}  {{ordered_product.variation_value | capfirst}}<br>
+                                               
+                                           
+                                            </p>
+                                        </td>
+                                        <td> &#8377  {{ordered_product.product.price|floatformat:1}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    
+                                </tbody>
+                            </table> 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <!-- Cart Total -->
+                    <div class="border p-md-4 p-30 border-radius cart-totals">
+                        <div class="heading_s1 mb-3">
+                            <h4>Cart Totals</h4>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td class="cart_total_label">Cart Subtotal</td>
+                                        <td class="cart_total_amount"><span class="font-lg fw-900 text-brand"> &#8377  {{order.total|floatformat:1}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cart_total_label">Shipping</td>
+                                        <td class="cart_total_amount"> <i class="ti-gift mr-5"></i> Free Shipping</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cart_total_label">Total</td>
+                                        <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand"> &#8377  {{order.total|floatformat:1}}</span></strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-4 col-lg-12 mt-md-3 mt-lg-0">
+                            <img class="wow fadeIn animated" style='max-width:30%' src="{% static 'assets/imgs/theme/payment-method.png' %}" alt="">
+                        </div>
+                    <div class="container mt-5">
+                <button type="submit" id="rzp-button1" class="btn btn-brand btn-block mt-30">Razorpay</button>
+                    
+                    </div> 
+                    <div class="container mt-5"> 
+                        <a href="{% url "app:index" %}" class="btn btn-primary">Continue Shopping</a>
+
+                    </div> 
+
+                    </div>
+                    {% comment %} <div class="container mt-5">
+                        <a href="{% url "app:index" %}" class="btn btn-primary">Continue Shopping</a>
+                        <a href="{% url "orders:my_orders" %}" class="btn btn-primary">My Orders</a>
+                    </div> {% endcomment %}
+
+                {% comment %} <div class="bt-1 border-color-1 mt-30 mb-30"></div>
+                     <form action="{% url 'orders:place_order' id=order.id %}" method="POST">
+                        {% csrf_token %}
+                        <div class="payment_method">
+                            <div class="mb-25">
+                                <h5>Payment</h5>
+                            </div>
+                            <div class="payment_option">
+                                <input hidden name="order_number" id="order_number" type="text" value="{{order.order_number}}">
+
+                              {% for method in paymentmethods %}
+                                    {% if method.method_name != 'WALLET' %}
+                                    <div class="">
+                                        <input class="form-check-input" required type="radio" name="payment_option" id="id_payment_div_{{method.method_name}}" value = {{method.method_name}}>
+                                        <label class="form-check-label" for="method{{forloop.counter}}">{{method.method_name}}</label>
+                                    </div>
+                                   { {% endif %} 
+                                {% endfor %} 
+
+                                <input disabled checked type="radio" class="form-check-input" id="id_payment_div_WALLET" name="payment_option" value="WALLET">
+
+                                <dl class="dlist-align">
+                                    <dt>
+                                        <i class="fa fa-wallet"></i> Wallet :
+                                        <span id="wallet_updated_balance">{{wallet.balance}}</span>
+                                    </dt>
+                                    <dd class="text-right align-items-center">
+                                        <label class="checkbox-inline custom-checkbox-label">
+                                            <input type="checkbox" class="custom-input" id="wallet_balance" name="wallet_balance" value="0" onclick="wallet_balance_add();"/>
+                                            Use Wallet
+                                        </label>
+                                    </dd>
+                                </dl>                                
+
+                            </div>
+                        </div>
+                        <button type="submit" name="submit" id="payment-form-btn" class="btn btn-fill-out btn-block mt-30">Pay
+                            <span id="grand_total_update">
+                                ${{order.total}}
+                            </span>
+                        </button>                    
+                    </form> 
+                </div> {% endcomment %}
+            </div>
+        </div>
+    </section>
+</main>
+
+
+ <!-- JavaScript -->
+
+ <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<!-- 
+ <script>
+    document.getElementById('cod-button1').onclick = function(e){
+        window.location.href = `{{success_url}}?order_id={{order.order_number}}&method=cod`
+    }
+
+</script> -->
+
+ 
+ 
+ <script>
+    let total_price = {{order.total}} * 100
+     var options = {
+         "key": "rzp_test_0cRU7HtN39HFf4", // Enter the Key ID generated from the Dashboard
+         "amount": total_price, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+         "currency": "INR",
+         "name": "TimeMachine",
+         "description": "Purchases",
+         "image": "https://example.com/your_logo",
+         "order_id": "{{payment_id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+         "handler": function (response){
+            
+             //alert(response.razorpay_payment_id);
+             //alert(response.razorpay_order_id);
+             //alert(response.razorpay_signature)
+             console.log(response)
+            // window.location.href = `/orders/online_payment/${response.order_id}/?payment_method=RAZORPAY&payment_id=${response.razorpay_payment_id}&payment_order_id=${response.razorpay_order_id}`;
+            window.location.href = `/order/online_payment/?order_id={{order.order_number}}&method=RAZORPAY&payment_id=${response.razorpay_payment_id}&status=COMPLETED `
+            // window.location.href = `/payment/payments/?order_id={{order.order_number}}&method=RAZORPAY&payment_id=${response.razorpay_payment_id}&payment_order_id=${response.razorpay_order_id}&payment_sign=${response.razorpay_signature}&status=COMPLETED & discount={{ coupon_discount }}`
+
+        },
+ 
+         "theme": {
+             "color": "#3399cc"
+         }
+     };
+     var rzp1 = new Razorpay(options);
+     rzp1.on('payment.failed', function (response){
+             alert(response.error.code);
+             alert(response.error.description);
+             alert(response.error.source);
+             alert(response.error.step);
+             alert(response.error.reason);
+             alert(response.error.metadata.order_id);
+             alert(response.error.metadata.payment_id);
+     });
+     document.getElementById('rzp-button1').onclick = function(e){
+         rzp1.open();
+         e.preventDefault();
+     }
+     </script> 
+
+
+
+{% endblock %}

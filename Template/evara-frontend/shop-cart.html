@@ -1,0 +1,296 @@
+﻿{% extends 'evara-frontend/base.html' %}
+{% load static %}
+{% block title %}
+Cart Page
+{% endblock title %}
+
+
+
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <!-- alertify -->
+   <!-- CSS -->
+   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+   <!-- Default theme -->
+   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+       
+    <main class="main">
+
+        <section class="mt-50 mb-50">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table shopping-summery text-center clean">
+                                <thead>
+                                    <tr class="main-heading">
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Colour</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Subtotal</th>
+                                        <th scope="col">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for cart_item in cart_items %}
+                                    <tr class="product_data">
+        
+                                        <td class="image product-thumbnail"><img src=" {{cart_item.product.images.url}} " alt="#"></td>
+                                        <td class="product-des product-name" style=" padding: 20px;  padding-left: 100px; padding-right: 100px; "> 
+                                            <h5 class="product-name"><a href="shop-product-right.html">{{cart_item.product.product_name}}</a></h5>
+
+                                            <p class="font-xs" > {{cart_item.product.description}}<br> 
+                                            </p>
+                                            {% if cart_item.product.category.discount != 0 %}
+                                            <span class="" style="color: red;">Category Offer {{cart_item.product.category.discount}} % Applied </span>
+                                            {% else %}
+
+                                            {% endif %}
+                                        </td>
+                                        <td class="variation" data-title="variation"><span id="variation"> {{cart_item.variations}}</span></td>
+
+                                        <td class="price" data-title="Price"><span id="cart_item_total"> {{cart_item.product.price |floatformat:1}}</span></td>
+
+
+
+
+                                        
+                                        <td class="text-center" data-title="Stock">
+                                            <div class="detail-qty border radius  m-auto ">
+
+                                                {% csrf_token %}
+                                                <input type="hidden" value="{{cart_item.product.id}}" id="prduct_id">
+
+
+													<input type="hidden" value=" {{forloop.counter}}" id="item_counter">
+
+											 	<input type="hidden" value="{{cart_item.id}} " id="cart_id">
+                                                {% comment %} <a href="#" class="qty-down"><i class="fi-rs-angle-small-down button-minus"></i></a> {% endcomment %}
+                                                <button class="button-plus border-0 bg-white " ><i class="fi-rs-angle-small-up "></i></button>
+                                                <!-- <span class="qty">{{cart_item.quantity}}</span>  -->
+                                                <input type="text" class="txt-center qty"   value="{{cart_item.quantity   }}">
+                                                <button class="button-minus  border-0 bg-white "><i class="fi-rs-angle-small-down "></i></button> 
+                                            </div>
+                                        </td>
+
+                                        
+
+
+
+                                        <td class="text-right" data-title="Cart">
+                                            <span> &#8377  {{cart_item.sub_total |floatformat:1}}</span>
+                                           
+                                        </td>
+                                        {% comment %} <a type="" class="delete_quantity" data-product-id="{{ cart_item.product.id }}"><i class="fi-rs-angle-small-down"></i></a> {% endcomment %}
+                                        <td  class="action" data-title="Remove">
+                                            <form id="cartItemForm" action="{% url 'cart:Remove_cart_item' cart_item.variations.id %}" method="post">
+                                                {% csrf_token %}
+                                                <button type="button" onclick="confirmRemoval(this.form)" class="text-muted border-0 bg-white" > <i class="fi-rs-trash"></i>
+                                                </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    
+                                    <tr>
+                                        <td colspan="6" class="text-end">
+                                            {% comment %} <a href="#" class="text-muted"> <i class="fi-rs-cross-small"></i> Clear Cart</a> {% endcomment %}
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="cart-action text-end">
+                            <a href="{% url "cart:cart" %}" class="btn  mr-10 mb-sm-15"><i class="fi-rs-shuffle mr-10"></i>Update Cart</a>
+                            <a href="{% url "product:shop" %}" class="btn "><i class="fi-rs-shopping-bag mr-10"></i>Continue Shopping</a>
+                        </div>
+                        <div class="divider center_icon mt-50 mb-50"><i class="fi-rs-fingerprint"></i></div>
+                        <div class="row mb-50">
+                            <div class="col-lg-6 col-md-12">
+                                <div class="heading_s1 mb-3">
+                                    <h4>Calculate Shipping</h4>
+                                </div>
+                                <p class="mt-15 mb-30">Flat rate: <span class="font-xl text-brand fw-900">5%</span></p>
+                                
+                                
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="border p-md-4 p-30 border-radius cart-totals">
+                                    <div class="heading_s1 mb-3">
+                                        <h4>Cart Totals</h4>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="cart_total_label">Cart Subtotal</td>
+                                                    <td class="cart_total_amount"><span class="font-lg fw-900 text-brand"> &#8377  {{total|floatformat:1}}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="cart_total_label">Shipping</td>
+                                                    <td class="cart_total_amount"> <i class="ti-gift mr-5"></i> Free Shipping</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="cart_total_label">Total</td>
+                                                    <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand"> &#8377  {{total|floatformat:1}}</span></strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <a href="{% url "cart:checkout" %}" class="btn "> <i class="fi-rs-box-alt mr-10"></i> Proceed To CheckOut</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+   
+   
+    <!-- alertify -->
+
+    <!-- JavaScript -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+	<!-- </form> -->
+    <script>
+        $(document).ready(function() {
+          var token = $('input[name=csrfmiddlewaretoken]').val();
+        
+          // Handle button clicks
+          $('.button-plus').click(function (e) {
+            e.preventDefault();
+        
+            // Get the product ID, cart item ID, and quanotity from the DOM
+            var productId = $(this).closest('tr').find('#prduct_id').val();
+            var itemCounter = parseInt($(this).closest('tr').find('#item_counter').val(), 10); // Convert to integer
+            var cartItemId = $(this).closest('tr').find('#cart_id').val();
+            var qtyInput = $(this).closest('.product_data').find('.qty');
+            var subTotalField = $(this).closest('tr').find('td.sub_total');
+            var sub_total=$(this).closest('.product_data').find('.sub_total');
+             // Target the input field for quantity
+        
+            // Make an AJAX request to update the cart item quantity
+            $.ajax({
+                method: "POST",
+                url: "{% url 'cart:newcart_update' %}",
+                data: {
+                    'product_id': productId,
+                    'cart_id': cartItemId,
+                    'qty': qtyInput.val(),
+                    'counter': itemCounter,
+                    'csrfmiddlewaretoken': token
+                },
+                success: function (response) {
+                    if (response.status === "success") {
+                        // Update the displayed quantity
+                        qtyInput.val(response.new_quantity);
+                        sub_total.text("₹" + response.sub_total)
+        
+                        // Update the subtotal for this specific cart item
+                        subTotalField.html("₹" + response.sub_total);
+                        
+                        // Update total, grand total, and tax as needed
+                        $('.total').text("₹" + response.total);
+                        $('.grand_total').text("₹" + response.grand_total);
+                        $('.tax').text("₹" + response.tax);
+                    }else if(response.status === "error"){
+        
+                        alert(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                    
+                }
+            });
+        });
+
+
+    // Handle button clicks
+
+                $('.button-minus').click(function (e) {
+                    e.preventDefault();
+        
+                    var productId = $(this).closest('tr').find('#prduct_id').val();
+                    var itemCounter = parseInt($(this).closest('tr').find('#item_counter').val(), 10);
+                    var cartItemId = $(this).closest('tr').find('#cart_id').val();
+                    var qtyInput = $(this).closest('.product_data').find('.qty');
+                    var subTotalField = $(this).closest('tr').find('td.sub_total');
+        
+                    $.ajax({
+                        method: "POST",
+                        url: "{% url 'cart:remove_cart_item_fully' %}",
+                        data: {
+                            'product_id': productId,
+                            'cart_id': cartItemId,
+                            'qty': qtyInput.val(),
+                            'counter': itemCounter,
+                            'csrfmiddlewaretoken': token
+                        },
+                        success: function (response) {
+                            if (response.status === "success") {
+                                qtyInput.val(response.new_quantity);
+                                subTotalField.html("₹" + response.sub_total);
+        
+                                $('.total').text("₹" + response.total);
+                                $('.grand_total').text("₹" + response.grand_total);
+                                $('.tax').text("₹" + response.tax);
+                            } else if(response.status === "error") {
+                                alert(response.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(error);
+                        }
+                    });
+                });
+            });
+     
+                
+            </script>
+
+            
+
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+            <script>
+                function confirmRemoval(form) {
+                    
+                     Swal.fire({
+        
+                title: 'Are you sure?',
+                text: 'Do you want to edit this status?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No, cancel',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+                
+            });
+                }
+                   
+            
+            </script>
+            <script>
+                alertify.set('notifier','position', 'top-center');
+                {% for msg in messages %}
+            
+                    alertify.success('{{msg}}');
+                {%endfor%}
+                 
+            </script>
+        
+
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/shop-cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:26:06 GMT -->
+</html>
+{% endblock content %}
+
