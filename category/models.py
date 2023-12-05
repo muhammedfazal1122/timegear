@@ -17,7 +17,7 @@ class Category(models.Model):
     is_offer_available = models.BooleanField(default=False)
     discount = models.IntegerField( default=0)
     minimum_amount = models.IntegerField(default=100)
-    end_date = models.DateField(default=date.today().isoformat())
+    end_date = models.DateField()
 
     class Meta:
         verbose_name = 'Category'
