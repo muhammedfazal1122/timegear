@@ -392,3 +392,21 @@ def fetch_data_year(request):
     end_date = today.replace(month=12, day=31)
     graph_data = get_order_count_by_year(start_date, end_date)
     return JsonResponse(graph_data)
+
+
+
+
+def get_names(request):
+    search = request.GET.get('search')
+    
+    # Check if 'search' is not None or empty
+    if search:
+        objs = Product.objects.filter(product_name__istartswith=search)
+        payload = [{'name': obj.product_name} for obj in objs]
+    else:
+        payload = []
+
+    return JsonResponse({
+        'status': True,
+        'payload': payload
+     })

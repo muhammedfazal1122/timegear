@@ -188,24 +188,98 @@
                         <a  href="{% url "app:index" %}" ><img style="width: 10px; ,height:10px"  src="{% static '/assets/imgs/theme/logo2.png' %}" alt="logo"></a>
                     </div>
                     <div class="header-right">
-                        <div class="search-style-2">
-                            <form action="#">
-                               
-                                <input type="text" placeholder="Search for items...">
+                        {% comment %} <div class="search-style-2">
+                        
+                            </div>
+
+
+                            <form method="GET" action="{% url 'app:index' %}">
+                                <button type="submit" class="size-113">
+                                    <i class="zmdi zmdi-search"></i>
+                                </button>
+                                <input type="text" class="size-114" name="search_product" placeholder="Search for items..."  value="{{ request.GET.search_product }}">
+                                <div id="suggestions-container" class="suggestions-container"></div>
+
                             </form>
-                        </div> 
+                        </div>  {% endcomment %}
+    
+                        <!-- Search product -->
+                        <div class="search-style-2">
+                            <form method="GET" action="{% url 'app:index' %}">
+                                <div class="bor8 dis-flex p-l-15">
+                                    <button type="submit" class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+                                        <i class="zmdi zmdi-search"></i>
+                                    </button>
+                                    
+                                </div>
+                                <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search_product" placeholder="Search" value="{{ request.GET.search_product }}">
+                                <div id="suggestions-container" class="suggestions-container"></div>
+                            </form>
+
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                              const searchInput = document.querySelector(".size-114");
+                              const suggestionsContainer = document.getElementById("suggestions-container");
+                            
+                              searchInput.addEventListener("input", function () {
+                                const userInput = searchInput.value;
+                                if (userInput.trim() !== "") {
+                                  // Make an API request to get suggestions
+                                  fetch(`/get-names/?search=${userInput}`)
+                                    .then((response) => response.json())
+                                    .then((data) => {
+                                      const suggestions = data.payload;
+                            
+                                      // Clear previous suggestions
+                                      suggestionsContainer.innerHTML = "";
+                            
+                                      // Display the new suggestions
+                                      suggestions.forEach((suggestion) => {
+                                        const suggestionElement = document.createElement("div");
+                                        suggestionElement.textContent = suggestion.name;
+                                        suggestionElement.classList.add("suggestion");
+                            
+                                        // Handle click on a suggestion
+                                        suggestionElement.addEventListener("click", function () {
+                                          searchInput.value = suggestion.name;
+                                          suggestionsContainer.innerHTML = "";
+                                        });
+                            
+                                        suggestionsContainer.appendChild(suggestionElement);
+                                      });
+                                    })
+                                    .catch((error) => {
+                                      console.error("Error fetching suggestions: ", error);
+                                    });
+                                } else {
+                                  suggestionsContainer.innerHTML = ""; // Clear suggestions if input is empty
+                                }
+                              });
+                            
+                              // Close the suggestions dropdown if the user clicks outside of it
+                              document.addEventListener("click", function (event) {
+                                if (!suggestionsContainer.contains(event.target) && event.target !== searchInput) {
+                                  suggestionsContainer.innerHTML = "";
+                                }
+                              });
+                            });
+                            </script>
+
+
+
                         <div class="header-action-right">
+                            
                             <div class="header-action-2">
                                 <div class="header-action-icon-2">
                                     <a href="shop-wishlist.html">
                                         <img class="svgInject" alt="Evara" src="{% static 'assets/imgs/theme/icons/icon-heart.svg' %}">
-                                        <span class="pro-count blue">4</span>
+                                        {% comment %} <span class="pro-count blue">4</span> {% endcomment %}
                                     </a>
                                 </div>
                                 <div class="header-action-icon-2">
                                     <a class="mini-cart-icon" href="{% url "cart:cart" %}">
                                         <img alt="Evara" src="{% static 'assets/imgs/theme/icons/icon-cart.svg' %}">
-                                        <span class="pro-count blue">4</span>
+                                        {% comment %} <span class="pro-count blue">4</span> {% endcomment %}
                                     </a>
                                     
                                 </div>
@@ -219,7 +293,7 @@
             <div class="container">
                 <div class="header-wrap header-space-between position-relative">
                     <div class="logo logo-width-1 d-block d-lg-none">
-                        <a href="index.html"><img src="assets/imgs/theme/logo2.png" alt="logo"></a>
+                        <a href="{% url "app:index" %}" ><img style="width: 10px; ,height:10px"  src="{% static '/assets/imgs/theme/logo2.png' %}" alt="logo"></a>
                     </div>
                     <div class="header-nav d-none d-lg-flex">
                         <div class="main-categori-wrap d-none d-lg-block">
@@ -248,9 +322,7 @@
                                                 
                                             </ul>
                                         </div>
-                                    </li>
-                                    
-                                    
+                                    </li>                                
                                    
                                     <li>
                                     </li>
@@ -280,67 +352,8 @@
                     <div class="hotline d-none d-lg-block">
                         {% comment %} <p><i class="fi-rs-headset"></i><span>Hotline</span> 1900 - 888 </p> {% endcomment %}
                     </div>
-                    <p class="mobile-promotion">Happy <span class="text-brand">Mother's Day</span>. Big Sale Up to 40%</p>
-                    <div class="header-action-right d-block d-lg-none">
-                        <div class="header-action-2">
-                            <div class="header-action-icon-2">
-                                <a href="shop-wishlist.html">
-                                    <img alt="Evara" src="assets/imgs/theme/icons/icon-heart.svg">
-                                    <span class="pro-count white">4</span>
-                                </a>
-                            </div>
-                            <div class="header-action-icon-2">
-                                <a class="mini-cart-icon" href="shop-cart.html">
-                                    <img alt="Evara" src="{% static 'assets/imgs/theme/icons/icon-cart.svg' %}">
-                                    <span class="pro-count white">2</span>
-                                </a>
-                                <div class="cart-dropdown-wrap cart-dropdown-hm2">
-                                    <ul>
-                                        <li>
-                                            <div class="shopping-cart-img">
-                                                <a href="shop-product-right.html"><img alt="Evara" src="{% static 'assets/imgs/shop/thumbnail-3.jpg' %}"></a>
-                                            </div>
-                                            <div class="shopping-cart-title">
-                                                <h4><a href="shop-product-right.html">Plain Striola Shirts</a></h4>
-                                                <h3><span>1 × </span> &#8377  800.00</h3>
-                                            </div>
-                                            <div class="shopping-cart-delete">
-                                                <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="shopping-cart-img">
-                                                <a href="shop-product-right.html"><img alt="Evara" src="{% static 'assets/imgs/shop/thumbnail-4.jpg' %}"></a>
-                                            </div>
-                                            <div class="shopping-cart-title">
-                                                <h4><a href="shop-product-right.html">Macbook Pro 2022</a></h4>
-                                                <h3><span>1 × </span> &#8377  3500.00</h3>
-                                            </div>
-                                            <div class="shopping-cart-delete">
-                                                <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="shopping-cart-footer">
-                                        <div class="shopping-cart-total">
-                                            <h4>Total <span> &#8377  383.00</span></h4>
-                                        </div>
-                                        <div class="shopping-cart-button">
-                                            <a href="shop-cart.html">View cart</a>
-                                            <a href="shop-checkout.html">Checkout</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="header-action-icon-2 d-block d-lg-none">
-                                <div class="burger-icon burger-icon-white">
-                                    <span class="burger-icon-top"></span>
-                                    <span class="burger-icon-mid"></span>
-                                    <span class="burger-icon-bottom"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% comment %} <p class="mobile-promotion">Happy <span class="text-brand">Mother's Day</span>. Big Sale Up to 40%</p> {% endcomment %}
+                    
                 </div>
             </div>
         </div>
@@ -349,7 +362,7 @@
         <div class="mobile-header-wrapper-inner">
             <div class="mobile-header-top">
                 <div class="mobile-header-logo">
-                    <a href="index.html"><img src="{% static 'assets/imgs/theme/logo2.png' %}" alt="logo"></a>
+                    <a href="{% url "app:index" %}" ><img style="width: 10px; ,height:10px"  src="{% static '/assets/imgs/theme/logo2.png' %}" alt="logo"></a>
                 </div>
                 <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
                     <button class="close-style search-close">
@@ -409,7 +422,7 @@
 
                                     <h1 class="animated fw-900 text-brand">On all products</h1>
                                     <p class="animated">Save more with coupons & up to 70% off</p>
-                                    <a class="animated btn btn-brush btn-brush-3" href="shop-product-right.html"> Shop Now </a>
+                                    <a class="animated btn btn-brush btn-brush-3" href="{% url "category:shop_by_category"  "chronographic" %}"> Shop Now </a>
                                 </div>
                             </div>
                             <div class="col-lg-7 col-md-6">
@@ -429,7 +442,7 @@
                                     <h2 class="animated fw-900">Exclusive Offer</h2>
                                     <h1 class="animated fw-900 text-7">Great Collection</h1>
                                     <p class="animated">Save more with coupons & up to 20% off</p>
-                                    <a class="animated btn btn-brush btn-brush-2" href="shop-product-right.html"> Discover Now </a>
+                                    <a class="animated btn btn-brush btn-brush-2" href="{% url "category:shop_by_category"  "chronographic" %}"> Discover Now </a>
                                 </div>
                             </div>
                             <div class="col-lg-7 col-md-6">
@@ -449,7 +462,7 @@
                                     <h2 class="animated fw-900">Big Deals From</h2>
                                     <h1 class="animated fw-900 text-8">Manufacturer</h1>
                                     <p class="animated">Chronographic, Smart watch, Digital..</p>
-                                    <a class="animated btn btn-brush btn-brush-1" href="shop-product-right.html"> Shop Now </a>
+                                    <a class="animated btn btn-brush btn-brush-1" href="{% url "category:shop_by_category"  "chronographic" %}"> Shop Now </a>
                                 </div>
                             </div>
                             <div class="col-lg-7 col-md-6">
@@ -549,7 +562,7 @@
                     {% comment %}  <a href="#" class="view-more d-none d-md-flex">View More<i class="fi-rs-angle-double-small-right"></i></a> {% endcomment %}
                 </div>
                 
-
+               
 
 
 
@@ -588,7 +601,7 @@
                                         <div class="product-category">
                                             <a href="shop-grid-right.html">{{ product.category }}</a>
                                         </div>
-                                        <h2><a href="shop-product-right.html">{{product.product_name}}</a></h2>
+                                        <h2><a href= "{% url 'product:product_details' product.id %}">{{product.product_name}}</a></h2>
                                         
                                         {% if product.max_price != product.price %}
                                             
@@ -607,7 +620,7 @@
                                         {% endif %}
 
                                         <div class="product-action-1 show">
-                                            <button id="product_id" aria-label="Add To Cart" class="action-btn hover-up" onclick="add_to_cart_icon({{ product.id }})" ><i class="fi-rs-shopping-bag-add"></i></button>
+                                            {% comment %} <button id="product_id" aria-label="Add To Cart" class="action-btn hover-up" onclick="add_to_cart_icon({{ product.id }})" ><i class="fi-rs-shopping-bag-add"></i></button> {% endcomment %}
                                         </div>
                                     </div>
                                 </div> 
@@ -655,13 +668,24 @@
                             <figure class=" img-hover-scale overflow-hidden">
                                 <a href="{% url "category:shop_by_category" cat.category_name %}"><img src="{{cat.cat_image.url}}" alt=""></a>
                             </figure>
-                            <h5><a href="{% url "category:shop_by_category" cat.category_name %}">{{cat.category_name}}</a></h5>
+                            <h5>
+                                <a href="{% url "category:shop_by_category" cat.category_name %}">{{cat.category_name}}</a>
+                                <div class="mt-15">
+
+                                    {% if products.category.discount != 0 %}
+                                    <span  style="color: red;" ><a>{{cat.discount}}% Offer Available</a></span>
+                                    {% endif %}
+                                </div>
+                            </h5>
+
+                        
                         </div>
                         {% endfor %}
                     </div>
                 </div>
             </div>
         </section>
+        
         <section class="section-padding">
             <div class="container wow fadeIn animated">
                 <h3 class="section-title mb-20"><span>New</span> Arrivals</h3>

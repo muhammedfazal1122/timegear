@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,HttpResponse,get_object_or_404
-from .models import Product
+from .models import Product,Variation
 from django.views.decorators.cache import cache_control
 from django.contrib.sessions.models import Session
 from django.contrib.auth.decorators import login_required
@@ -39,6 +39,44 @@ def admn_product_list(request):
 
     }
     return render(request, 'evara-backend/page-products-list.html',context)
+
+
+def admn_variation_list(request):
+    products = Product.objects.all()
+    variations = Variation.objects.all()
+    
+    context = {
+
+        'products':products,
+        'variations':variations,
+
+    }
+    return render(request, 'evara-backend/variation-list.html',context)
+
+
+def admn_add_variation(request):
+    products = Product.objects.all()
+
+    if request.method == "POST":
+        print(request.POST)
+        product_id = request.POST.get("product_name")
+        variation_value = request.POST.get("variation_value")
+        category_id = request.POST.get('category')
+        stock = request.POST.get('stock')
+
+        # Convert product_id to a Product instance
+        product = get_object_or_404(Product, id=product_id)
+
+        # Create a Variation instance with the Product instance
+        variation = Variation.objects.create(product=product, variation_value=variation_value,stock=stock)
+        return redirect("product:admn_variation_list")
+
+    context = {
+        "products": products,
+    }
+    return render(request, 'evara-backend/page-add-variation.html', context)
+
+
 
 @login_required
 @cache_control(no_cache=True,must_revalidate=True,no_store=True)
@@ -112,6 +150,8 @@ def admn_add_product(request):
     return render(request, 'evara-backend/page-add-product.html',context)
 
 
+# def admn_add_variation(request,product_id):
+    # if
 
 @login_required
 @cache_control(no_cache=True,must_revalidate=True,no_store=True)
@@ -169,6 +209,19 @@ def admn_delete_product(request,id):
         product.soft_deleted=True
     product.save()
     return redirect('product:admn_product_list')
+
+
+def admn_delete_variation(request,id):
+    variation=get_object_or_404(Variation,id=id)
+    if variation.soft_deleted:
+        variation.soft_deleted=False
+        variation.is_available=True
+
+    else:
+        variation.is_available=False
+        variation.soft_deleted=True
+    variation.save()
+    return redirect('product:admn_variation_list')
 
 def shop(request):
 

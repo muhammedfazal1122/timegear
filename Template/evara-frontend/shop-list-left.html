@@ -25,7 +25,7 @@ Shop Page
                     <div class="col-lg-9">
                         <div class="shop-product-fillter style-2">
                             <div class="totall-product">
-                                <p> We found <strong class="text-brand">688</strong> items for you!</p>
+                                {% comment %} <p> We found <strong class="text-brand">688</strong> items for you!</p> {% endcomment %}
                             </div>
                             {% comment %} <div class="sort-by-product-area">
                                 <div class="sort-by-cover mr-10">
@@ -99,10 +99,14 @@ Shop Page
                                     <div class="product-category">
                                         <a href="shop-grid-right.html">{{ product.category }}</a>
                                     </div>
-                                    <h2><a href="shop-product-right.html"> {{product.product_name}} </a></h2>
+                                    <h2><a href= "{% url 'product:product_details' product.id %}" > {{product.product_name}} </a></h2>
                                     <div class="product-price">
                                         <span>{{ product.price }} </span>
                                         <span class="old-price">{{ product.max_price }}</span>
+                                        <div>
+                                        <span class="mt-15"  style="color: #ff0000;"><i class="fi-rs-crown mr-5" style="color: #ff0000;"></i>This Category Have {{product.category.discount}}%  Offer </span>
+
+                                        </div>
                                     </div>
                                     <p class="mt-15">{{ product.description }}</p>
                                     <div class="product-action-1 show">

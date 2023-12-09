@@ -42,11 +42,20 @@
                             <span class="text">Dashboard</span>
                         </a>
                     </li>
-                    <li class="menu-item{% if current_url_name == 'admn_product_list' %} active {% endif %}">
-                        <a class="menu-link" href="{% url 'product:admn_product_list' %}"> <i class="icon material-icons md-shopping_bag"></i>
+                   
+                  
+                    <li class="menu-item has-submenu {% if current_url_name == 'admn_product_list' %} active {% endif %}">
+                        <a class="menu-link" href="#">
+                            <i class="icon material-icons md-shopping_bag"></i>
                             <span class="text">Products</span>
                         </a>
+                        <div class="submenu">
+                            <a href="{% url 'product:admn_product_list' %}">Products</a>
+                             <a href="{% url 'product:admn_variation_list' %}">Variation</a>
+
+                        </div>
                     </li>
+                    
                     <li class="menu-item{% if current_url_name == 'admn_product_category' %} active {% endif %}">
                         <a class="menu-link" href="{% url 'category:admn_product_category' %}"> <i class="icon material-icons md-add_box"></i>
                             <span class="text">Categories</span>
@@ -57,16 +66,6 @@
                             <span class="text">Orders</span>
                         </a>
                     </li>
-                    {% comment %} <li class="menu-item has-submenu ">
-                        <a class="menu-link" href="#"> <i class="icon material-icons md-shopping_cart"></i>
-                            <span class="text"></span>
-                        </a>
-                        <div class="submenu">
-                            <a href="page-orders-1.html">Order list 1</a>
-                            <a href="page-orders-2.html">Order list 2</a>
-                            <a href="page-orders-detail.html">Order detail</a>
-                        </div>
-                    </li> {% endcomment %}
                     <li class="menu-item  {% if current_url_name == 'admn_users_list' %} active {% endif %}">
                         <a class="menu-link" href="{% url 'app:admn_users_list' %}"> <i class="icon material-icons md-store"></i>
                             <span class="text">Users</span>

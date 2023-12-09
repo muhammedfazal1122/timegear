@@ -2,6 +2,7 @@
 {% block title %}TimeMachine{% endblock title %}
 {% load static %}
 {% block content %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <main class="main">
   
@@ -22,9 +23,6 @@
                                             <figure class="border-radius-10">
                                                 <img src="{{products.images.url}}" alt="product image"  >
                                             </figure>
-                                            {% comment %} <figure class="border-radius-10">
-                                                <img src="{{products.product_images1.url}}" alt="product image">
-                                            </figure> {% endcomment %}
                                             <figure class="border-radius-10">
                                                 <img src="{{products.product_images2.url}}" alt="product image" >
                                             </figure>
@@ -56,10 +54,10 @@
                                     <div class="social-icons single-share">
                                         <ul class="text-grey-5 d-inline-block">
                                             <li><strong class="mr-10">Share this:</strong></li>
-                                            <li class="social-facebook"><a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-facebook.svg' %}" alt=""></a></li>
+                                            <li class="social-facebook"><a href="https://www.facebook.com/"><img src="{% static 'assets/imgs/theme/icons/icon-facebook.svg' %}" alt=""></a></li>
                                             <li class="social-twitter"> <a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-twitter.svg' %}" alt=""></a></li>
-                                            <li class="social-instagram"><a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-instagram.svg' %}" alt=""></a></li>
-                                            <li class="social-linkedin"><a href="#"><img src="{% static 'assets/imgs/theme/icons/icon-pinterest.svg' %}" alt=""></a></li>
+                                            <li class="social-instagram"><a href="https://www.instagram.com/"><img src="{% static 'assets/imgs/theme/icons/icon-instagram.svg' %}" alt=""></a></li>
+                                            <li class="social-linkedin"><a href="https://www.linkedin.com/"><img src="{% static 'assets/imgs/theme/icons/icon-pinterest.svg' %}" alt=""></a></li>
                                         </ul>
                                     </div>
                                    
@@ -164,35 +162,6 @@
             </div>  
         </section>
     </main>
-
-
-
-
-
-
-    <script>
-        function add_to_cart_icon(product_id) {
-
-        $.ajax({
-        type: 'GET',
-        url: '/cart/add_to_cart_icon/product_id',
-        console.log('Esfgdgsgbsfbbsfta');
-        success: function(data) {
-
-           // if (data) alertify.success('Product successfully added to cart');
-           // else alertify.error("Something bbbbbbbbbbbbbbbbbwent wrong!!")
-        },
-        error: function() {
-            alertify.error("Somethinggggggggg went wrong!!!")
-            console.log('Error fetching user data');
-        }
-    });
-}
-
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-
-
 
 {% endblock content %}
     

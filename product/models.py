@@ -60,6 +60,8 @@ class Variation(models.Model):
     variation_value = models.CharField(max_length=100,default="Black")
     created_date = models.DateTimeField(auto_now=True)
     stock = models.PositiveIntegerField(default=0)
+    soft_deleted = models.BooleanField(default=False)
+    is_available = models.BooleanField(default=True)
     objects = VariationManager()
 
     def __str__(self) -> str:
