@@ -15,9 +15,9 @@ urlpatterns = [
 #---------------------------- WALLET---------------------------------------#
     path('my_wallet', views.my_wallet, name='my_wallet'),
 
-    path('fetchData/month/', views.fetch_data_month, name='fetch_data_month'),
-    path('fetchData/week/', views.fetch_data_week, name='fetch_data_week'),
-    path('fetchData/year/', views.fetch_data_year, name='fetch_data_year'),
+    # path('fetchData/month/', views.fetch_data_month, name='fetch_data_month'),
+    # path('fetchData/week/', views.fetch_data_week, name='fetch_data_week'),
+    # path('fetchData/year/', views.fetch_data_year, name='fetch_data_year'),
 
 
 ]
