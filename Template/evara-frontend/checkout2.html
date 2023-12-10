@@ -41,43 +41,43 @@
                                             {% csrf_token %}
                                             <div class="form-group">
                                                 <label for="address">Address (Area and Street)</label>
-                                                <textarea class="form-control" id="address" name="address"
+                                                <textarea class="form-control" id="address" name="address" required
                                                         placeholder="Enter your address"></textarea>
                                             </div>
                                             <div class="row">
                                                 <div class="form-group col-lg-6">
                                                     <label for="locality">Name</label>
-                                                    <input type="text" class="form-control" id="locality" name="first_name"
+                                                    <input type="text" class="form-control" id="locality" name="first_name" required
                                                         placeholder="Enter your name">
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label for="locality">Name</label>
-                                                    <input type="text" class="form-control" id="locality" name="last_name"
+                                                    <input type="text" class="form-control" id="locality" name="last_name" required
                                                         placeholder="Enter your last_name">
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label for="locality">Country</label>
                                                     <input type="text" class="form-control" id="locality" name="country"
-                                                        placeholder="Enter your Country">
+                                                        placeholder="Enter your Country" required>
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label for="state">State</label>
                                                     <input type="text" class="form-control" id="state" name="state"
-                                                        placeholder="Enter a state">
+                                                        placeholder="Enter a state" required>
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label for="city">City/District/Town</label>
-                                                    <input type="text" class="form-control" id="city" name="city"
+                                                    <input type="text" class="form-control" id="city" name="city" required
                                                         placeholder="Enter your city">
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label for="pinCode">Pin code</label>
                                                     <input type="text" class="form-control" name="pincode" id="pincode"
-                                                        placeholder="Enter your pinCode">
+                                                        placeholder="Enter your pinCode" required>
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label for="mobile">10-digit mobile number</label>
-                                                    <input type="tel" class="form-control" name="phone" id="mobile"
+                                                    <input type="tel" class="form-control" name="phone" id="mobile" required
                                                         placeholder="Enter your mobile number">
                                                 </div>
                                                 <label for="userId"></label>

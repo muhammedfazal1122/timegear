@@ -131,7 +131,7 @@
                                         </div>
                                         <div class="product-extra-link2">
                                             <button type="submit" class="button button-add-to-cart">Add to cart</button>
-                                            <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
+                                            {% comment %} <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a> {% endcomment %}
                                             <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
                                         </div>
                                     </div>
@@ -243,12 +243,12 @@
                             </div> 
                             <div class="header-action-right">
                                 <div class="header-action-2">
-                                    <div class="header-action-icon-2">
+                                    {% comment %} <div class="header-action-icon-2">
                                         <a href="shop-wishlist.html">
                                             <img class="svgInject" alt="Evara" src="{% static '/assets/imgs/theme/icons/icon-heart.svg' %}">
-                                            {% comment %} <span class="pro-count blue">4</span> {% endcomment %}
+                                            <span class="pro-count blue">4</span>
                                         </a>
-                                    </div>
+                                    </div> {% endcomment %}
                                     <div class="header-action-icon-2">
                                         <a class="mini-cart-icon" href="{% url "cart:cart" %}">
                                             <img alt="Evara" src="{% static 'assets/imgs/theme/icons/icon-cart.svg' %}">

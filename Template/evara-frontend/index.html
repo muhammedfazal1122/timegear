@@ -188,24 +188,11 @@
                         <a  href="{% url "app:index" %}" ><img style="width: 10px; ,height:10px"  src="{% static '/assets/imgs/theme/logo2.png' %}" alt="logo"></a>
                     </div>
                     <div class="header-right">
-                        {% comment %} <div class="search-style-2">
-                        
-                            </div>
-
-
-                            <form method="GET" action="{% url 'app:index' %}">
-                                <button type="submit" class="size-113">
-                                    <i class="zmdi zmdi-search"></i>
-                                </button>
-                                <input type="text" class="size-114" name="search_product" placeholder="Search for items..."  value="{{ request.GET.search_product }}">
-                                <div id="suggestions-container" class="suggestions-container"></div>
-
-                            </form>
-                        </div>  {% endcomment %}
+                       
     
                         <!-- Search product -->
                         <div class="search-style-2">
-                            <form method="GET" action="{% url 'app:index' %}">
+                            <form method="GET" action="{% url 'product:shop' %}">
                                 <div class="bor8 dis-flex p-l-15">
                                     <button type="submit" class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
                                         <i class="zmdi zmdi-search"></i>
@@ -213,8 +200,8 @@
                                     
                                 </div>
                                 <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search_product" placeholder="Search" value="{{ request.GET.search_product }}">
-                                <div id="suggestions-container" class="suggestions-container"></div>
                             </form>
+                            <div id="suggestions-container" class="suggestions-container"></div>
 
                         <script>
                             document.addEventListener("DOMContentLoaded", function () {
@@ -229,6 +216,7 @@
                                     .then((response) => response.json())
                                     .then((data) => {
                                       const suggestions = data.payload;
+                                      
                             
                                       // Clear previous suggestions
                                       suggestionsContainer.innerHTML = "";
@@ -270,12 +258,12 @@
                         <div class="header-action-right">
                             
                             <div class="header-action-2">
-                                <div class="header-action-icon-2">
+                                {% comment %} <div class="header-action-icon-2">
                                     <a href="shop-wishlist.html">
                                         <img class="svgInject" alt="Evara" src="{% static 'assets/imgs/theme/icons/icon-heart.svg' %}">
-                                        {% comment %} <span class="pro-count blue">4</span> {% endcomment %}
+                                        <span class="pro-count blue">4</span>
                                     </a>
-                                </div>
+                                </div> {% endcomment %}
                                 <div class="header-action-icon-2">
                                     <a class="mini-cart-icon" href="{% url "cart:cart" %}">
                                         <img alt="Evara" src="{% static 'assets/imgs/theme/icons/icon-cart.svg' %}">
@@ -590,7 +578,7 @@
                                         </div>
                                         <div class="product-action-1">
                                             {% comment %} <a aria-label="Quick view" class="action-btn hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a> {% endcomment %}
-                                            <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
+                                            {% comment %} <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a> {% endcomment %}
                                             {% comment %} <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a> {% endcomment %}
                                         </div>
                                         <div class="product-badges product-badges-position product-badges-mrg">
@@ -705,7 +693,7 @@
                                 </div>
                                 <div class="product-action-1">
                                     {% comment %} <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a> {% endcomment %}
-                                    <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html" tabindex="0"><i class="fi-rs-heart"></i></a>
+                                    {% comment %} <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html" tabindex="0"><i class="fi-rs-heart"></i></a> {% endcomment %}
                                     {% comment %} <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html" tabindex="0"><i class="fi-rs-shuffle"></i></a> {% endcomment %}
                                 </div>
                                 <div class="product-badges product-badges-position product-badges-mrg">

@@ -90,9 +90,10 @@ TimeMachine
     }
 
     window.onload = function () {
-        var thirtySeconds = 30;
-        var display = document.querySelector('#timer');
-        startTimer(thirtySeconds, display);
-    };
+      var remainingTime = 30;  // Change this to your desired timeout duration
+      var display = document.querySelector('#timer');
+      startTimer(remainingTime, display);
+  };
+  
 </script> 
 {% endblock content %}

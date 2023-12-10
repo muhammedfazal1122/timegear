@@ -136,7 +136,7 @@
                                                 <button type="submit" href="{% url "cart:add_cart" products.id %}" class="button button-add-to-cart">Add to cart</button>     
                                                 {% endif %}
 
-                                                <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
+                                                {% comment %} <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a> {% endcomment %}
                                                 {% comment %} <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a> {% endcomment %}
                                             </div>
                                     </form>

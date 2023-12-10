@@ -29,5 +29,9 @@ urlpatterns = [
     path('admin-logout/',views.admin_logout,name='admin_logout'),
      
 
+    path('admin-dashboard/fetchData/month/', views.fetch_data_month, name='fetch_data_month'),
+    path('admin-dashboard/fetchData/week/', views.fetch_data_week, name='fetch_data_week'),
+    path('admin-dashboard/fetchData/year/', views.fetch_data_year, name='fetch_data_year'),
+
 
 ]

@@ -1,3 +1,7 @@
+from datetime import timedelta, timezone
+from functools import wraps
+from django.http import JsonResponse
+import datetime
 from django.shortcuts import render,redirect,HttpResponse,get_object_or_404
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
@@ -8,6 +12,7 @@ from django.contrib.sessions.models import Session
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from .models import Account
+from order.models import Order,OrderProduct
 from user.models import Wallet,WalletTransaction
 import pyotp
 from product.models import Product
@@ -208,20 +213,37 @@ def forgotpassword(request):
 ########################## admin ####################################
 
 
+
+def superadmin_required(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.is_superuser:
+            return view_func(request, *args, **kwargs)
+        else:
+            messages.error(request, "Invalid admin credentials!")
+            return redirect('accounts:admin_login')
+    return _wrapped_view
+
+
+
+
+
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def admin_login(request):
-    if request.method == "POST":        
-        print(request.POST)
-        email = request.POST.get('email')  # Use request.POST.get to safely access POST data
-        password = request.POST.get('password')
-        user = authenticate(request, email=email, password=password)
+    if request.user.is_authenticated and request.user.is_superuser:
+        return redirect('accounts:admin_dashboard')
 
-        if user and user.is_superuser:
-            login(request, user)
-            messages.success(request, "Admin login successful!")
-            return redirect('accounts:admin_dashboard')
-        else:
-            messages.warning(request, "Invalid admin credentials!")
+    if request.method == "POST":
+        email = request.POST['email']
+        password = request.POST['password']
+        user = authenticate(request, email=email, password=password)
+        if user:
+            if user.is_superuser:
+                login(request, user)
+                messages.success(request, "Admin login successful!")
+                return redirect('accounts:admin_dashboard')  # Use the named URL pattern
+            messages.error(request, "Invalid admin credentials!")
+
 
     return render(request, 'evara-backend/page-account-login.html')
 
@@ -229,6 +251,7 @@ def admin_login(request):
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='accounts:admin_login')  # Use the named URL pattern
+@superadmin_required
 def admin_dashboard(request):
 
     return render(request,'evara-backend/index.html')
@@ -243,3 +266,74 @@ def admin_logout(request):
     logout(request)
     messages.info(request,"Logout Successfully")
     return render(request, 'evara-backend/page-account-login.html')   
+
+
+
+
+
+
+
+
+
+
+
+def get_order_count_by_month(start_date, end_date):
+    date_count_map = {}
+    current_date = start_date
+    while current_date <= end_date:
+        date_count_map[str(current_date.day)] = Order.objects.filter(created_at__date=current_date).count()
+        current_date += timedelta(days=1)
+    return date_count_map
+
+def get_order_count_by_week(start_date, end_date):
+    date_count_map = {}
+    current_date = start_date
+    while current_date <= end_date:
+        date_count_map[str(current_date.weekday())] = Order.objects.filter(created_at__date=current_date).count()
+        current_date += timedelta(days=1)
+    return date_count_map
+
+def get_order_count_by_year(start_date, end_date):
+    date_count_map = {}
+    current_date = start_date
+    while current_date.month <= end_date.month and current_date.year <= end_date.year:
+        date_count_map[str(current_date.month)] = Order.objects.filter(
+            created_at__year=current_date.year, created_at__month=current_date.month
+        ).count()
+        current_date += timedelta(days=32)
+        current_date = current_date.replace(day=1)
+        
+    for month, count in date_count_map.items():
+        print(f'Month: {month}, Order Count: {count}')
+        
+    return date_count_map
+
+def fetch_data_week(request):
+    print("jjjjjjjjjjjjjj")
+    today = datetime.datetime.now()
+    start_date = today - timedelta(days=today.weekday())
+    end_date = start_date + timedelta(days=6)
+    graph_data = get_order_count_by_week(start_date, end_date)
+    return JsonResponse(graph_data)
+
+
+def fetch_data_month(request):
+    today = datetime.datetime.now()
+    print("todayllllllllll",today)
+    start_date = today.replace(day=1)
+    end_date = (today.replace(day=1) + timedelta(days=32)).replace(day=1) - timedelta(days=1)
+    graph_data = get_order_count_by_month(start_date, end_date)
+    return JsonResponse(graph_data)
+
+
+def fetch_data_year(request):
+    today = datetime.datetime.now()
+    start_date = today.replace(month=1, day=1)
+    end_date = today.replace(month=12, day=31)
+    print("ddddddddddddddddddddd",start_date, end_date)
+    graph_data = get_order_count_by_year(start_date, end_date)
+    for key, value in graph_data.items():
+        print(f'Month: {key}, Order Count: {value}')
+    
+    return JsonResponse(graph_data)
+

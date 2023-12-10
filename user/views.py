@@ -23,7 +23,7 @@ from order.models import OrderProduct
 from user.models import Wallet,WalletTransaction
 from django.db.models import Sum
 from django.views.decorators.http import require_http_methods
-
+from django.contrib.auth import update_session_auth_hash
 
 
 def edit_profile(request):
@@ -33,25 +33,25 @@ def edit_profile(request):
     user_profile = Account.objects.get(email=request.user.email) # Get the UserProfile instance for the logged-in user
 
     if request.method == 'POST':
-        # Handle the form submission and update the user details
         username = request.POST.get('username')
-        # email = request.POST.get('email')
         email = request.POST.get('email')
-        # password = request.POST.get('password')
-        # Update the user profile fields with the form data
-        user_profile.email = email
-        # user_profile.password = password
-        user_profile.username = username
-
-        # Save the changes to the UserProfile and User models
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        if password1==password2:
+            user_profile.email = email
+            user_profile.username = username
+            if password1:
+                user_profile.set_password(password1)
+                update_session_auth_hash(request, user_profile)  # Update session to avoid logout
+            
+        else:
+            messages.warning(request,"Password is not matching")
+            return redirect("user:edit_profile")
         user_profile.save()
         messages.success(request,"updated sucesessfully")
         return redirect('app:index')  # Redirect to the user profile page after successful update
     else:
         return render(request, 'evara-frontend/edit-profile.html', {'user_profile': user_profile})
-
-
-
 
 
 
