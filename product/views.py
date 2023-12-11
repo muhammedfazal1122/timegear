@@ -18,6 +18,8 @@ from brand.models import Brand
 
 @cache_control(no_cache=True,must_revalidate=True,no_store=True)   
 def product_details(request, id):
+
+    
     products=Product.objects.get(id=id)
     
     context={

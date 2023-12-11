@@ -226,9 +226,6 @@ def order_placed(request, total=0, quantity=0):
 
             try:
                 wallet = Wallet.objects.get(user=current_user)
-                print(wallet,"kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk")
-                print(wallet.balance,"baallllaaaaaaaaa porth")
-                print(data.total,"ttooootttl, porth")
                 wallet_transactions = WalletTransaction.objects.filter(wallet=wallet)
 
                 # Assuming both wallet.balance and data.total are DecimalField or similar
@@ -256,12 +253,8 @@ def order_placed(request, total=0, quantity=0):
                     payment.save()
                     data.payment = payment
                     data.save()
-                    print(wallet.balance,"baallllaaaaaaaaa, ullil")
-                    print(data.total,"ttooootttl, ullil")
                 else:
 
-                    print(wallet.balance,"baallllaaaaaaaaa")
-                    print(data.total,"ttooootttl")
                     # Insufficient balance, handle this case (e.g., show a message to the user)
                     messages.error(request, 'Insufficient balance in the wallet.')
                     return redirect("cart:checkout")

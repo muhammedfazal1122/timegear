@@ -80,7 +80,7 @@ Cart Page
 
 
 
-                                        <td class="text-right" data-title="Cart">
+                                        <td class="text-right sub_total" data-title="Cart">
                                             <span> &#8377  {{cart_item.sub_total |floatformat:1}}</span>
                                            
                                         </td>
@@ -104,7 +104,7 @@ Cart Page
                             </table>
                         </div>
                         <div class="cart-action text-end">
-                            <a href="{% url "cart:cart" %}" class="btn  mr-10 mb-sm-15"><i class="fi-rs-shuffle mr-10"></i>Update Cart</a>
+                            {% comment %} <a href="{% url "cart:cart" %}" class="btn  mr-10 mb-sm-15"><i class="fi-rs-shuffle mr-10"></i>Update Cart</a> {% endcomment %}
                             <a href="{% url "product:shop" %}" class="btn "><i class="fi-rs-shopping-bag mr-10"></i>Continue Shopping</a>
                         </div>
                         <div class="divider center_icon mt-50 mb-50"><i class="fi-rs-fingerprint"></i></div>
@@ -264,7 +264,7 @@ Cart Page
                      Swal.fire({
         
                 title: 'Are you sure?',
-                text: 'Do you want to edit this status?',
+                text: 'Do you want to Remove?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Yes',

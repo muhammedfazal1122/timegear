@@ -24,9 +24,12 @@ def _cart_id(request):
     return cart 
 
 
+
 def add_cart(request,product_id):
     current_user = request.user
-
+    if not request.user.is_authenticated:
+        messages.warning(request,"User Must Login To Add item in Cart ")
+        return redirect('accounts:user-login')
     if request.method=="POST":
         for item in request.POST:
             key = item
@@ -64,6 +67,8 @@ def add_cart(request,product_id):
 
 
 def cart(request,total=0,quantity=0,cart_items=None):
+  
+    
     try:
         category_discount_applyed=0
         cart = Cart.objects.get(cart_id=_cart_id(request))
@@ -101,11 +106,11 @@ def cart(request,total=0,quantity=0,cart_items=None):
 
 def Remove_cart_item(request,variations):
     
-    cart = Cart.objects.get(user=request.user)
     variations = get_object_or_404(Variation, id=variations)
     cart_item = CartItem.objects.filter(variations=variations,cart=cart)
     cart_item.delete()
     return redirect('cart:cart')
+
 
 
 

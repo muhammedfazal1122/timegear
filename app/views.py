@@ -13,7 +13,7 @@ from cart.models import Cart
 
 
 
-# Create your views here.
+# Create your views here
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def index(request):
     products = Product.objects.all().filter(is_available=True)
@@ -46,7 +46,6 @@ def admn_users_list(request):
     return render(request, 'evara-backend/page-users-list.html',context)
 
 #------------------Admin side user block unblock-------------
-@login_required
 @cache_control(no_cache=True,must_revalidate=True,no_store=True)
 def admn_users_block_unblock(request,id):
     user=Account.objects.get(id=id)

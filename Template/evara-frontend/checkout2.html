@@ -34,10 +34,39 @@
                                     </a>
                                 </span>
                             </div>
+
+                            <script>
+                                // Function to validate input fields and prevent consecutive spaces
+                                // Function to validate input fields
+                            function validateForm() {
+                                var name = document.getElementById(".first_name").value;
+                                var email = document.getElementById("email").value;
+                                var mobile = document.getElementById("phone").value;
+                                var password = document.getElementById("password").value;
+                                var confirmPassword = document.getElementById("confirm_password").value;
+                        
+                                // Regular expression to check for consecutive spaces
+                                var spacePattern = /\s/;
+                        
+                                if (spacePattern.test(name) || spacePattern.test(email) || spacePattern.test(password) || spacePattern.test(confirmPassword)) {
+                                    alertify.error("Please avoid spaces in the input fields.");
+                                    return false; // Prevent form submission
+                                }
+                        
+                                if (mobile.length !== 10 || isNaN(mobile)) {
+                                    alertify.error("Mobile number must be exactly 10 digits and contain only numbers.");
+                                    return false; // Prevent form submission
+                                }
+                        
+                                
+                            }
+                            </script>
+
+
                             <div class="panel-collapse collapse login_form" id="AddNewAddress">
                                 <div class="panel-body">
                                     <div class="login_wrap widget-taber-content bg-white background-white border-radius-5 p-4 mb-5 row">
-                                        <form method="post" action="{% url "cart:add_address" %}" >
+                                        <form method="post" action="{% url "cart:add_address" %}"  onsubmit="return validateForm();" >
                                             {% csrf_token %}
                                             <div class="form-group">
                                                 <label for="address">Address (Area and Street)</label>
@@ -46,38 +75,38 @@
                                             </div>
                                             <div class="row">
                                                 <div class="form-group col-lg-6">
-                                                    <label for="locality">Name</label>
-                                                    <input type="text" class="form-control" id="locality" name="first_name" required
+                                                    <label for="locality">First Name</label>
+                                                    <input type="text" class="form-control first_name"  name="first_name" required
                                                         placeholder="Enter your name">
                                                 </div>
                                                 <div class="form-group col-lg-6">
-                                                    <label for="locality">Name</label>
-                                                    <input type="text" class="form-control" id="locality" name="last_name" required
+                                                    <label for="locality">Last Name</label>
+                                                    <input type="text" class="form-control first_name"  name="last_name" required
                                                         placeholder="Enter your last_name">
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label for="locality">Country</label>
-                                                    <input type="text" class="form-control" id="locality" name="country"
+                                                    <input type="text" class="form-control first_name"  name="country"
                                                         placeholder="Enter your Country" required>
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label for="state">State</label>
-                                                    <input type="text" class="form-control" id="state" name="state"
+                                                    <input type="text" class="form-control first_name" name="state"
                                                         placeholder="Enter a state" required>
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label for="city">City/District/Town</label>
-                                                    <input type="text" class="form-control" id="city" name="city" required
+                                                    <input type="text" class="form-control first_name"  name="city" required
                                                         placeholder="Enter your city">
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label for="pinCode">Pin code</label>
-                                                    <input type="text" class="form-control" name="pincode" id="pincode"
+                                                    <input type="number" class="form-control" name="pincode" id="pincode"
                                                         placeholder="Enter your pinCode" required>
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label for="mobile">10-digit mobile number</label>
-                                                    <input type="tel" class="form-control" name="phone" id="mobile" required
+                                                    <input type="tel" class="form-control" name="phone" id="phone" required
                                                         placeholder="Enter your mobile number">
                                                 </div>
                                                 <label for="userId"></label>
