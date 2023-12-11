@@ -103,15 +103,17 @@ def cart(request,total=0,quantity=0,cart_items=None):
 
 
 
+def Remove_cart_item(request, variations):
+    # Assuming you have a way to get the user's cart, for example, using the user's session
+    user_cart = get_object_or_404(Cart, user=request.user)
 
-def Remove_cart_item(request,variations):
-    
     variations = get_object_or_404(Variation, id=variations)
-    cart_item = CartItem.objects.filter(variations=variations,cart=cart)
-    cart_item.delete()
+    cart_item = CartItem.objects.filter(variations=variations, cart=user_cart).first()
+
+    if cart_item:
+        cart_item.delete()
+
     return redirect('cart:cart')
-
-
 
 
 
