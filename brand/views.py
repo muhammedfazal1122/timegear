@@ -73,6 +73,7 @@ class AdmnEnableDisableBrandView(View):
         try:
             if brand.soft_deleted == False:
                 brand.soft_deleted = True
+                
                 brand.save()
                 messages.success(request, 'Category Disabled')
             else:

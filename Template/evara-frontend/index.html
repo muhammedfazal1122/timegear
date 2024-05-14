@@ -201,7 +201,7 @@
                                 </div>
                                 <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search_product" placeholder="Search" value="{{ request.GET.search_product }}">
                             </form>
-                            <div id="suggestions-container" class="suggestions-container"></div>
+                            <div id="suggestions-container" class="suggestions-container"></div>    
 
                         <script>
                             document.addEventListener("DOMContentLoaded", function () {
@@ -653,22 +653,27 @@
                     <div class="carausel-6-columns" id="carausel-6-columns">
                         {% for cat in categories %}
                         <div class="card-1">
-                            <figure class=" img-hover-scale overflow-hidden">
-                                <a href="{% url "category:shop_by_category" cat.category_name %}"><img src="{{cat.cat_image.url}}" alt=""></a>
+                            <figure class="img-hover-scale overflow-hidden">
+                                <a href="{% url "category:shop_by_category" cat.category_name %}">
+                                    {% if cat.cat_image %}
+                                        <img src="{{cat.cat_image.url}}" alt="">
+                                    {% else %}
+                                        <!-- Fallback image or message if no image is available -->
+                                        <img src="{% static 'assets/imgs/default-image.jpg' %}" alt="Default Image">
+                                    {% endif %}
+                                </a>
                             </figure>
                             <h5>
                                 <a href="{% url "category:shop_by_category" cat.category_name %}">{{cat.category_name}}</a>
                                 <div class="mt-15">
-
                                     {% if products.category.discount != 0 %}
-                                    <span  style="color: red;" ><a>{{cat.discount}}% Offer Available</a></span>
+                                    <span style="color: red;"><a>{{cat.discount}}% Offer Available</a></span>
                                     {% endif %}
                                 </div>
                             </h5>
-
-                        
                         </div>
                         {% endfor %}
+                        
                     </div>
                 </div>
             </div>

@@ -16,7 +16,7 @@ from cart.models import Cart
 # Create your views here
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def index(request):
-    products = Product.objects.all().filter(is_available=True)
+    products = Product.objects.all().filter(is_available=True,brand__soft_deleted=False,category__soft_deleted=False)
     brand = Brand.objects.filter(soft_deleted=False)
     categories = Category.objects.all()
     users = Account.objects.all()

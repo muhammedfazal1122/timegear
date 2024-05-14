@@ -255,6 +255,12 @@
                                                 <th>Shipping</th>
                                                 <td colspan="2"><em>Free Shipping</em></td>
                                             </tr>
+                                            <tr>
+                                                <th>Saved Price</th>
+                                                <td colspan="2">
+                                                    <span class="reducded_price"> </span>
+                                                </td>
+                                            </tr>
                                          
                                             <tr>
                                                 <th>Total</th>
@@ -316,6 +322,7 @@
 
             let couponCode
             let total_final =  document.getElementById('total-amount').value;
+            {% comment %} let reducded_price =  document.getElementById('reducded_price').value; {% endcomment %}
             let category_discount =  document.getElementById('category_discount').value;
             function checkForCredentials(form) {
                
@@ -385,10 +392,14 @@
                             });
 
                             total_final = Math.ceil(totalAmount - ((response.coupon / 100) * totalAmount))
+                            reducded_price=(parseInt(totalAmount)-parseInt(total_final))
                             $('.total-amount-no-discount')
                                 .css("text-decoration", "line-through")
                                 .prev()
                                 .text('\u20B9' + total_final);
+                            $('.reducded_price').text('You Saved '+reducded_price+'\u20B9'+' by coupon')
+
+
 
                         } else {
                             console.log(response.error)

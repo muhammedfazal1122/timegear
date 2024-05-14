@@ -85,8 +85,6 @@ def sent_otp(request):
     )
    return redirect('accounts:verify-otp')
 
-from django.contrib import messages
-from django.contrib.auth import login
 
 def verify_otp(request):
     print(request.session.get('email'))
@@ -106,6 +104,7 @@ def verify_otp(request):
             messages.warning(request, "Invalid OTP!")
             return redirect('accounts:verify-otp')
     return render(request,'evara-frontend/otp.html')
+
 
 
 
@@ -210,7 +209,7 @@ def forgotpassword(request):
 
 
 
-########################## admin ####################################
+############################################## admin #########################################
 
 
 
@@ -309,7 +308,6 @@ def get_order_count_by_year(start_date, end_date):
     return date_count_map
 
 def fetch_data_week(request):
-    print("jjjjjjjjjjjjjj")
     today = datetime.datetime.now()
     start_date = today - timedelta(days=today.weekday())
     end_date = start_date + timedelta(days=6)
@@ -319,7 +317,6 @@ def fetch_data_week(request):
 
 def fetch_data_month(request):
     today = datetime.datetime.now()
-    print("todayllllllllll",today)
     start_date = today.replace(day=1)
     end_date = (today.replace(day=1) + timedelta(days=32)).replace(day=1) - timedelta(days=1)
     graph_data = get_order_count_by_month(start_date, end_date)
@@ -330,7 +327,6 @@ def fetch_data_year(request):
     today = datetime.datetime.now()
     start_date = today.replace(month=1, day=1)
     end_date = today.replace(month=12, day=31)
-    print("ddddddddddddddddddddd",start_date, end_date)
     graph_data = get_order_count_by_year(start_date, end_date)
     for key, value in graph_data.items():
         print(f'Month: {key}, Order Count: {value}')

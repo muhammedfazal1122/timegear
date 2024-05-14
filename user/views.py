@@ -275,7 +275,7 @@ def get_weekly_sales():
 
     return OrderProduct.objects.filter(
         order__created_at__range=(start_date, end_date)
-    ).values('product__product_name').annotate(weekly_sales=Sum('quantity'))
+        ).values('product__product_name').annotate(weekly_sales=Sum('quantity'))
 
 
 

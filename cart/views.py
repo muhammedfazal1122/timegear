@@ -37,8 +37,8 @@ def add_cart(request,product_id):
 
     product = Product.objects.get(id=product_id)
     variation = Variation.objects.get(product=product,variation_value=value)
-    try:
-        cart = Cart.objects.get(cart_id=_cart_id(request), user=current_user) #get cart item  by using the cart_id present in session
+    try:                                                                    
+        cart = Cart.objects.get(cart_id=_cart_id(request), user=current_user)  #get cart item  by using the cart_id present in session
     except Cart.DoesNotExist:
         cart = Cart.objects.create(
             cart_id = _cart_id(request),
@@ -49,7 +49,6 @@ def add_cart(request,product_id):
         cart_items = CartItem.objects.get(variations=variation, cart=cart, user=current_user)
         cart_items.quantity +=1
         cart_items.save()
-
     except CartItem.DoesNotExist:
         cart_items = CartItem.objects.create(
             product=product,
@@ -264,7 +263,7 @@ def newcart_update(request):
                 cart_item.save()
                 # total = cart_item.quantity * product.price
                 # tax = (2 * total) / 100
-                # grand_total = total + tax
+                # grand_total = total + tax  
                 sub_total=cart_item.quantity * product.price
                 new_quantity = cart_item.quantity
              
@@ -372,3 +371,5 @@ def add_to_cart_icon(request, product_id, quantity=1):
         cart_item.save()
 
     return JsonResponse({"success": True})
+
+
