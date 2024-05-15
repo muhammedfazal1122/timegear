@@ -30,6 +30,7 @@ DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = ["*"]
 
+CSRF_TRUSTED_ORIGINS = ['*']
 
 # Application definition
 
@@ -181,3 +182,6 @@ EMAIL_HOST_PASSWORD =  config('EMAIL_HOST_PASSWORD')
 
 RAZORPAY_KEY_ID = "rzp_test_0cRU7HtN39HFf4"
 RAZORPAY_KEY_SECRET = "R6mY0vjz85uOfdO07V4sg8Nh"
+
+
+#updated
