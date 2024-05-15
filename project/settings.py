@@ -30,7 +30,9 @@ DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = ["*"]
 
-CSRF_TRUSTED_ORIGINS = ['*']
+CSRF_TRUSTED_ORIGINS = ['']
+
+CSRF_TRUSTED_ORIGINS = ['https://timegear.online','https://*.127.0.0.1']
 
 # Application definition
 
