@@ -49,7 +49,7 @@ class Order(models.Model):
     order_total = models.FloatField()
     tax = models.FloatField(null=True)
     status = models.CharField(max_length=10, choices=STATUS, default='Pending')
-    ip = models.CharField(blank=True, max_length=20, default='127.0.0.1')
+    ip = models.CharField(null=True, max_length=20, default='127.0.0.1')
     is_ordered = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
