@@ -49,7 +49,7 @@ class Order(models.Model):
     order_total = models.FloatField()
     tax = models.FloatField(null=True)
     status = models.CharField(max_length=10, choices=STATUS, default='Pending')
-    ip = models.CharField(blank=True, max_length=20)
+    ip = models.CharField(blank=True, max_length=20, default='127.0.0.1')
     is_ordered = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -99,7 +99,7 @@ class OrderProduct(models.Model):
 class Coupon(models.Model):
     coupon_code = models.CharField(max_length=20, unique=True, null=True, blank=True)
     discount_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    minimum_amount = models.IntegerField(default=1000)
+    minimum_amount = models.IntegerField(default=1000)  
     valid_to = models.DateField()
 
 
