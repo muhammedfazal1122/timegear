@@ -43,7 +43,7 @@ TimeMachine
                                   <div class="form-group">
                                       <label for="otp">OTP:</label>
                                       <input type="text" name="otp" class="form-control" required>
-                                      <p id="timer">Time remaining: <span id="countdown">60</span> seconds</p>
+                                      <p id="timer">Time remaining: <span id="countdown">120</span> seconds</p>
                                   </div>
                                   <button type="submit" class="btn btn-primary">Verify OTP</button>
                               </form>
@@ -70,7 +70,7 @@ TimeMachine
         var timer = duration, seconds;
 
         var countdown = setInterval(function () {
-            seconds = parseInt(timer % 60, 10);
+            seconds = parseInt(timer % 120, 10);
 
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
